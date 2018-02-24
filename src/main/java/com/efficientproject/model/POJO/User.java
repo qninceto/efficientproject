@@ -17,6 +17,10 @@ public class User {
 	private boolean admin;
 	private Organization organization;
 	private boolean isEmployed=false;
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public User(int id, String firstName, String lastName, String email, String password, String avatarPath, boolean admin,
 			Organization organization,boolean isEmployed) {

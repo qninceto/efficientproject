@@ -3,7 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <%@ page errorPage="error.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -16,8 +19,8 @@
 <link rel="stylesheet" type="text/css"
 	href="font-awesome/css/font-awesome.min.css" />
 
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	function myFunction() {
@@ -68,9 +71,8 @@
 			</div>
 			<div class="panel-body">
 
-
-				<form method="post" action="./SignUp" id="login-form"
-					class="form-horizontal">
+				<form:form id="login-form" modelAttribute="user" action="signup" method="post" class="form-horizontal">
+				<!-- <form method="post" action="./SignUp" id="login-form" class="form-horizontal"> -->
 
 					<div id="signupalert" style="display: none"
 						class="alert alert-danger">
@@ -79,18 +81,15 @@
 					</div>
 
 					<div class="form-group">
-						<label for="first-name" class="col-md-3 control-label">First
-							Name</label>
+						<form:label path="firstName" class="col-md-3 control-label">First Name</form:label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="first-name"
-								placeholder="First Name" required>
+							<form:input type="text" path="firstName" name="first-name" class="form-control" placeholder="First name" required="required"/>
 						</div>
 					</div>
 
 
 					<div class="form-group">
-						<label for="last-name" class="col-md-3 control-label">Last
-							Name</label>
+						<form:label  path="lastName" class="col-md-3 control-label">Last Name</form:label >
 						<div class="col-md-9">
 							<input type="last-name" class="form-control" name="last-name"
 								placeholder="Last name" required>
@@ -99,7 +98,7 @@
 
 
 					<div class="form-group">
-						<label for="email" class="col-md-3 control-label">Email</label>
+						<form:label  path="email" class="col-md-3 control-label">Email</form:label >
 						<div class="col-md-9">
 							<input type="email" class="form-control" name="email"
 								placeholder="Email Address" required>
@@ -108,7 +107,7 @@
 
 
 					<div class="form-group">
-						<label for="password" class="col-md-3 control-label">Password</label>
+					<form:label  path="password" class="col-md-3 control-label">Password</form:label >
 						<div class="col-md-9">
 							<input type="password" id="pass1" class="form-control"
 								name="password" placeholder="Password" required>
@@ -159,7 +158,7 @@
 								href="./LogIn"> Log in here </a></span>
 						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>

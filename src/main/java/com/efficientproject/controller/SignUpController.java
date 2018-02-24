@@ -1,7 +1,5 @@
 package com.efficientproject.controller;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -11,19 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efficientproject.model.POJO.Organization;
 import com.efficientproject.model.POJO.User;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
-import com.efficientproject.model.interfaces.IOrganizationDAO;
-import com.efficientproject.model.interfaces.IUserDAO;
-import com.efficientproject.util.CredentialsChecks;
-import com.efficientproject.util.Encrypter;
-import com.efficientproject.util.SendingMails;
 
 @Controller
 public class SignUpController {
@@ -33,7 +24,8 @@ public class SignUpController {
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
 	
 	@RequestMapping(value="/signup",method = RequestMethod.GET)
-	protected String signUp(Model model) {
+	protected String startSignUp(Model model) {
+		model.addAttribute("user", new User()); 
 //		try {
 //			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 //			response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -52,85 +44,88 @@ public class SignUpController {
 	}
 
 	@RequestMapping(value="/signup",method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			response.setCharacterEncoding("UTF-8");
-			request.setCharacterEncoding("UTF-8");
-			String firstName = escapeHtml4(request.getParameter("first-name")).trim();
-			String lastName = escapeHtml4(request.getParameter("last-name")).trim();
-			String email = escapeHtml4(request.getParameter("email")).trim();
-			String password = escapeHtml4(request.getParameter("password"));
-			String reppassword = escapeHtml4(request.getParameter("repPassword"));
-			String organization = escapeHtml4(request.getParameter("organization")).trim();
-			boolean isAdmin = Boolean.parseBoolean(request.getParameter("isAdmin"));
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
-
-			if (firstName.length() > MAX_LENGTH_INPUT_CHARACTERS || lastName.length() > MAX_LENGTH_INPUT_CHARACTERS
-					|| email.length() > MAX_LENGTH_INPUT_CHARACTERS || password.length() > MAX_LENGTH_INPUT_CHARACTERS
-					|| organization.length() > MAX_LENGTH_INPUT_CHARACTERS) {
-				forwardWithErrorMessage(request, response, dispatcher,"Characters number limit reached-no more than " + MAX_LENGTH_INPUT_CHARACTERS + "allowed");
-				return;
-			}
-			if(firstName.length()==0 || lastName.length()==0) {
-				forwardWithErrorMessage(request, response, dispatcher,"Empty first or last name! Try Again");
-				return;
-			}
-
-			if (!CredentialsChecks.isMailValid(email)) {
-				forwardWithErrorMessage(request, response, dispatcher,"Invalid e-mail! Try Again");
-				return;
-			}
-
-			if (!password.equals(reppassword)) {
-				forwardWithErrorMessage(request, response, dispatcher,"Passwords do no match please make sure they do!");
-				return;
-			}
-
-			if (!CredentialsChecks.isPaswordStrong(password)) {
-				forwardWithErrorMessage(request, response, dispatcher,"Password must contain 5 symbols and at least one number and letter");
-				return;
-			}
-
-			if (IUserDAO.getDAO(SOURCE_DATABASE).isThereSuchAUser(email)) {
-				forwardWithErrorMessage(request, response, dispatcher,"User with such email already exists, use another email !");
-				return;
-			}
-
-			if (IOrganizationDAO.getDAO(SOURCE_DATABASE).isThereSuchOrganization(organization)) {
-				forwardWithErrorMessage(request, response, dispatcher,"This organization is already registered !");
-				return;
-			}
-
-			if (isAdmin && organization.length()==0) {
-				forwardWithErrorMessage(request, response, dispatcher,"This organization name is empty !");
-				return;
-			}
-
-			// adding the user to the database:
-			User user = null;
-			int UserId; 
-			if (!isAdmin) {
-				user = new User(firstName, lastName, email, password, false);
-				UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserWorker(user);
-			} else {
-				user = new User(firstName, lastName, email, password, true, new Organization(organization));
-				UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserAdmin(user);
-			}
-			user.setId(UserId);
-			SendingMails.sendEmail(email, SEND_EMAIL_SUBJECT, messageContent(firstName,lastName,password));
-			user.setPassword(Encrypter.encrypt(password));
-			request.getSession().setAttribute("user", user);
-			response.sendRedirect("./ProfileEdit");
-		} catch (EfficientProjectDAOException | DBException | IOException | ServletException e) {
-			try {
-				request.getRequestDispatcher("error.jsp").forward(request, response);
-				e.printStackTrace();
-			} catch (IOException | ServletException e1) {
-				e1.printStackTrace();
-			}
-		}
+	protected String signUpUser(@ModelAttribute("user") User user) {
+		
+//		try {
+//			response.setCharacterEncoding("UTF-8");
+//			request.setCharacterEncoding("UTF-8");
+//			String firstName = escapeHtml4(request.getParameter("first-name")).trim();
+//			String lastName = escapeHtml4(request.getParameter("last-name")).trim();
+//			String email = escapeHtml4(request.getParameter("email")).trim();
+//			String password = escapeHtml4(request.getParameter("password"));
+//			String reppassword = escapeHtml4(request.getParameter("repPassword"));
+//			String organization = escapeHtml4(request.getParameter("organization")).trim();
+//			boolean isAdmin = Boolean.parseBoolean(request.getParameter("isAdmin"));
+//
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
+//
+//			if (firstName.length() > MAX_LENGTH_INPUT_CHARACTERS || lastName.length() > MAX_LENGTH_INPUT_CHARACTERS
+//					|| email.length() > MAX_LENGTH_INPUT_CHARACTERS || password.length() > MAX_LENGTH_INPUT_CHARACTERS
+//					|| organization.length() > MAX_LENGTH_INPUT_CHARACTERS) {
+//				forwardWithErrorMessage(request, response, dispatcher,"Characters number limit reached-no more than " + MAX_LENGTH_INPUT_CHARACTERS + "allowed");
+//				return;
+//			}
+//			if(firstName.length()==0 || lastName.length()==0) {
+//				forwardWithErrorMessage(request, response, dispatcher,"Empty first or last name! Try Again");
+//				return;
+//			}
+//
+//			if (!CredentialsChecks.isMailValid(email)) {
+//				forwardWithErrorMessage(request, response, dispatcher,"Invalid e-mail! Try Again");
+//				return;
+//			}
+//
+//			if (!password.equals(reppassword)) {
+//				forwardWithErrorMessage(request, response, dispatcher,"Passwords do no match please make sure they do!");
+//				return;
+//			}
+//
+//			if (!CredentialsChecks.isPaswordStrong(password)) {
+//				forwardWithErrorMessage(request, response, dispatcher,"Password must contain 5 symbols and at least one number and letter");
+//				return;
+//			}
+//
+//			if (IUserDAO.getDAO(SOURCE_DATABASE).isThereSuchAUser(email)) {
+//				forwardWithErrorMessage(request, response, dispatcher,"User with such email already exists, use another email !");
+//				return;
+//			}
+//
+//			if (IOrganizationDAO.getDAO(SOURCE_DATABASE).isThereSuchOrganization(organization)) {
+//				forwardWithErrorMessage(request, response, dispatcher,"This organization is already registered !");
+//				return;
+//			}
+//
+//			if (isAdmin && organization.length()==0) {
+//				forwardWithErrorMessage(request, response, dispatcher,"This organization name is empty !");
+//				return;
+//			}
+//
+//			// adding the user to the database:
+//			User user = null;
+//			int UserId; 
+//			if (!isAdmin) {
+//				user = new User(firstName, lastName, email, password, false);
+//				UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserWorker(user);
+//			} else {
+//				user = new User(firstName, lastName, email, password, true, new Organization(organization));
+//				UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserAdmin(user);
+//			}
+//			user.setId(UserId);
+//			SendingMails.sendEmail(email, SEND_EMAIL_SUBJECT, messageContent(firstName,lastName,password));
+//			user.setPassword(Encrypter.encrypt(password));
+//			request.getSession().setAttribute("user", user);
+//			response.sendRedirect("./ProfileEdit");
+		return "redirect:./profile-edit";
+//		} catch (EfficientProjectDAOException | DBException | IOException | ServletException e) {
+//			try {
+//				request.getRequestDispatcher("error.jsp").forward(request, response);
+//				e.printStackTrace();
+//			} catch (IOException | ServletException e1) {
+//				e1.printStackTrace();
+//			}
+//		}
 	}
+	
 	private void forwardWithErrorMessage(HttpServletRequest request, HttpServletResponse response,
 			RequestDispatcher dispatcher, String errorMessage) throws ServletException, IOException {
 		request.setAttribute("errorMessage", errorMessage);

@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.efficientproject.model.DAO.INFO;
 import com.efficientproject.model.POJO.User;
 import com.efficientproject.model.exceptions.DBException;
@@ -26,9 +29,11 @@ import com.efficientproject.model.interfaces.IUserDAO;
 import com.efficientproject.util.CredentialsChecks;
 import com.efficientproject.util.Encrypter;
 
-@WebServlet("/ProfileEdit")
-@MultipartConfig(maxFileSize = 16177215)     
-public class ProfileEditServlet extends HttpServlet {
+@MultipartConfig(maxFileSize = 16177215) 
+@Controller
+@RequestMapping(value="/profile-edit")
+//ex ProfileEditServlet!
+public class ProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String IMAGES_PATH = INFO.IMAGES_PATH;
 
