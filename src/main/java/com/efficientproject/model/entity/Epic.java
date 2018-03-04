@@ -1,4 +1,4 @@
-package com.efficientproject.model.POJO;
+package com.efficientproject.model.entity;
 
 public class Epic {
 	private int id;

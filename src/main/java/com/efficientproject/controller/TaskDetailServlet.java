@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.efficientproject.model.POJO.Epic;
-import com.efficientproject.model.POJO.Project;
-import com.efficientproject.model.POJO.Sprint;
-import com.efficientproject.model.POJO.Task;
-import com.efficientproject.model.POJO.User;
+import com.efficientproject.model.entity.Epic;
+import com.efficientproject.model.entity.Project;
+import com.efficientproject.model.entity.Sprint;
+import com.efficientproject.model.entity.Task;
+import com.efficientproject.model.entity.User;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;

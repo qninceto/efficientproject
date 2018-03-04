@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.activation.UnsupportedDataTypeException;
 
 import com.efficientproject.model.DAO.SprintDAO;
-import com.efficientproject.model.POJO.Sprint;
+import com.efficientproject.model.entity.Sprint;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 

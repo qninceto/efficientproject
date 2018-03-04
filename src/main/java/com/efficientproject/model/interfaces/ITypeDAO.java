@@ -5,7 +5,7 @@ import java.util.List;
 import javax.activation.UnsupportedDataTypeException;
 
 import com.efficientproject.model.DAO.TypeDAO;
-import com.efficientproject.model.POJO.Type;
+import com.efficientproject.model.entity.Type;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 

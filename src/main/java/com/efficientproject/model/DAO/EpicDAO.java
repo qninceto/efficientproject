@@ -10,8 +10,8 @@ import javax.activation.UnsupportedDataTypeException;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.POJO.Epic;
-import com.efficientproject.model.POJO.Project;
+import com.efficientproject.model.entity.Epic;
+import com.efficientproject.model.entity.Project;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.activation.UnsupportedDataTypeException;
 
 import com.efficientproject.model.DAO.EpicDAO;
-import com.efficientproject.model.POJO.Epic;
+import com.efficientproject.model.entity.Epic;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 

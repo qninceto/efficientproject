@@ -1,13 +1,20 @@
-package com.efficientproject.model.POJO;
-
+package com.efficientproject.model.entity;
 
 import java.io.File;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.efficientproject.model.DAO.INFO;
 
+@Entity
+@Table(name = "users")
 public class User {
-	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator+"avatar-default.jpg";
-	
+	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
+
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -16,18 +23,18 @@ public class User {
 	private String avatarPath;
 	private boolean admin;
 	private Organization organization;
-	private boolean isEmployed=false;
-	
+	private boolean isEmployed = false;
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int id, String firstName, String lastName, String email, String password, String avatarPath, boolean admin,
-			Organization organization,boolean isEmployed) {
-		this(firstName,lastName, email, password, admin,organization);
+	public User(int id, String firstName, String lastName, String email, String password, String avatarPath,
+			boolean admin, Organization organization, boolean isEmployed) {
+		this(firstName, lastName, email, password, admin, organization);
 		this.id = id;
 		this.avatarPath = avatarPath;
-		this.isEmployed=isEmployed;
+		this.isEmployed = isEmployed;
 	}
 
 	public User(String firstName, String lastName, String email, String password, boolean admin) {
@@ -37,14 +44,17 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.admin = admin;
-		this.avatarPath=DEFAUL_AVATAR_PATH;
+		this.avatarPath = DEFAUL_AVATAR_PATH;
 	}
-	
-	public User(String firstName, String lastName, String email, String password, boolean admin,Organization organization) {
+
+	public User(String firstName, String lastName, String email, String password, boolean admin,
+			Organization organization) {
 		this(firstName, lastName, email, password, admin);
-		this.organization=organization;
+		this.organization = organization;
 	}
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -52,7 +62,6 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public String getEmail() {
 		return email;
@@ -149,8 +158,5 @@ public class User {
 			return false;
 		return true;
 	}
-
-	
-
 
 }

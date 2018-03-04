@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.efficientproject.model.POJO.Task;
-import com.efficientproject.model.POJO.User;
+import com.efficientproject.model.entity.Task;
+import com.efficientproject.model.entity.User;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.model.interfaces.ITaskDAO;
 

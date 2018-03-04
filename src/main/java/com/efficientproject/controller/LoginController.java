@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.efficientproject.model.POJO.User;
+import com.efficientproject.model.entity.User;
 
 @Controller
 public class LoginController  {

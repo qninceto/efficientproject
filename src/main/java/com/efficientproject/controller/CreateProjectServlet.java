@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.POJO.Organization;
-import com.efficientproject.model.POJO.Project;
-import com.efficientproject.model.POJO.User;
+import com.efficientproject.model.entity.Organization;
+import com.efficientproject.model.entity.Project;
+import com.efficientproject.model.entity.User;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;

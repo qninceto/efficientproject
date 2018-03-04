@@ -1,4 +1,4 @@
-package com.efficientproject.model.POJO;
+package com.efficientproject.model.entity;
 
 import java.sql.Date;
 import java.util.Calendar;

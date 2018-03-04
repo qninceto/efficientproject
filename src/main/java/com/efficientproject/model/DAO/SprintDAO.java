@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.POJO.Sprint;
+import com.efficientproject.model.entity.Sprint;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.ISprintDAO;

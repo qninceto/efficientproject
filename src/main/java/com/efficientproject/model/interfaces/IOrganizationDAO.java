@@ -3,7 +3,7 @@ package com.efficientproject.model.interfaces;
 import javax.activation.UnsupportedDataTypeException;
 
 import com.efficientproject.model.DAO.OrganizationDAO;
-import com.efficientproject.model.POJO.Organization;
+import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 

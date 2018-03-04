@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.activation.UnsupportedDataTypeException;
 
-import com.efficientproject.model.POJO.Organization;
+import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.IOrganizationDAO;

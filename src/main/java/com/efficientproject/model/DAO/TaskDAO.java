@@ -15,12 +15,12 @@ import javax.activation.UnsupportedDataTypeException;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.POJO.Element;
-import com.efficientproject.model.POJO.Epic;
-import com.efficientproject.model.POJO.Sprint;
-import com.efficientproject.model.POJO.Task;
-import com.efficientproject.model.POJO.Type;
-import com.efficientproject.model.POJO.User;
+import com.efficientproject.model.entity.Element;
+import com.efficientproject.model.entity.Epic;
+import com.efficientproject.model.entity.Sprint;
+import com.efficientproject.model.entity.Task;
+import com.efficientproject.model.entity.Type;
+import com.efficientproject.model.entity.User;
 import com.efficientproject.model.exceptions.DBException;
 import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
