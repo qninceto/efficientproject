@@ -3,10 +3,15 @@ package com.efficientproject.model.entity;
 import java.io.File;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.efficientproject.model.DAO.INFO;
 
@@ -14,19 +19,33 @@ import com.efficientproject.model.DAO.INFO;
 @Table(name = "users")
 public class User {
 	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
-
+	
+	@Id
+	@GeneratedValue
 	private int id;
+	
+	@NotNull
+	@Size(max = 45)
 	private String firstName;
+	
+	@NotNull
 	private String lastName;
+	
+	@NotNull
 	private String email;
+	
+	@NotNull
 	private String password;
 	private String avatarPath;
 	private boolean admin;
+	
+	@ManyToOne (fetch = FetchType.LAZY)// or eager?
+	@JoinColumn(name = "organization_id", nullable = true)
 	private Organization organization;
+	
 	private boolean isEmployed = false;
 
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(int id, String firstName, String lastName, String email, String password, String avatarPath,
@@ -95,13 +114,7 @@ public class User {
 		this.admin = admin;
 	}
 
-	public Organization getOrganization() {
-		return organization;
-	}
 
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
 
 	public String getFirstName() {
 		return firstName;
