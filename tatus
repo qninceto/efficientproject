@@ -1,0 +1,178 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex b2e1e2e..0fb8f6f 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -41,32 +41,21 @@[m
+ 			<artifactId>spring-boot-starter-test</artifactId>[m
+ 			<scope>test</scope>[m
+ 		</dependency>[m
+[31m-<!-- 		<dependency>[m
+[32m+[m		[32m<dependency>[m
+ 			<groupId>org.springframework.boot</groupId>[m
+ 			<artifactId>spring-boot-starter-security</artifactId>[m
+[31m-		</dependency> -->[m
+[32m+[m		[32m</dependency>[m
+ 		<dependency>[m
+ 			<groupId>org.apache.tomcat.embed</groupId>[m
+ 			<artifactId>tomcat-embed-jasper</artifactId>[m
+ 			<scope>provided</scope>[m
+ 		</dependency>[m
+[31m-		[m
+[31m-		[m
+[31m-<!-- 		<dependency>[m
+[31m-			<groupId>org.hibernate</groupId>[m
+[31m-			<artifactId>hibernate-entitymanager</artifactId>[m
+[31m-			<version>${hibernate.version}</version>[m
+[31m-		</dependency> -->[m
+[32m+[m
+ 		<dependency>[m
+ 			<groupId>jstl</groupId>[m
+ 			<artifactId>jstl</artifactId>[m
+ 			<version>${jstl.version}</version>[m
+ 		</dependency>[m
+[31m-<!-- 		<dependency>[m
+[31m-			<groupId>org.hibernate</groupId>[m
+[31m-			<artifactId>hibernate-validator</artifactId>[m
+[31m-			<version>${hibernate.validator.version}</version>[m
+[31m-		</dependency> -->[m
+ 		<dependency>[m
+ 			<groupId>org.codehaus.plexus</groupId>[m
+ 			<artifactId>plexus-archiver</artifactId>[m
+[36m@@ -87,6 +76,23 @@[m
+ 			<artifactId>gson</artifactId>[m
+ 			<version>2.8.0</version>[m
+ 		</dependency>[m
+[32m+[m		[32m<!-- js libs -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.webjars</groupId>[m
+[32m+[m			[32m<artifactId>bootstrap</artifactId>[m
+[32m+[m			[32m<version>3.3.4</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.webjars</groupId>[m
+[32m+[m			[32m<artifactId>jquery</artifactId>[m
+[32m+[m			[32m<version>1.10.2</version>[m
+[32m+[m		[32m</dependency>[m[41m [m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.webjars</groupId>[m
+[32m+[m			[32m<artifactId>webjars-locator</artifactId>[m
+[32m+[m			[32m<version>0.30</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- js libs end -->[m
+ 		<dependency>[m
+ 			<groupId>javax.mail</groupId>[m
+ 			<artifactId>javax.mail-api</artifactId>[m
+[1mdiff --git a/src/main/java/com/efficientproject/Application.java b/src/main/java/com/efficientproject/Application.java[m
+[1mindex ea3f0b2..5fa84f7 100644[m
+[1m--- a/src/main/java/com/efficientproject/Application.java[m
+[1m+++ b/src/main/java/com/efficientproject/Application.java[m
+[36m@@ -2,9 +2,9 @@[m [mpackage com.efficientproject;[m
+ [m
+ import org.springframework.boot.SpringApplication;[m
+ import org.springframework.boot.autoconfigure.SpringBootApplication;[m
+[31m-//import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;[m
+[32m+[m[32mimport org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;[m
+ [m
+[31m-@SpringBootApplication[m
+[32m+[m[32m@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })[m
+ public class Application {[m
+ 	 public static void main(String[] args) throws Throwable {[m
+ 	        SpringApplication.run(Application.class, args);[m
+[1mdiff --git a/src/main/java/com/efficientproject/WebSecurityConfig.java b/src/main/java/com/efficientproject/WebSecurityConfig.java[m
+[1mindex ac4abca..e11cc45 100644[m
+[1m--- a/src/main/java/com/efficientproject/WebSecurityConfig.java[m
+[1m+++ b/src/main/java/com/efficientproject/WebSecurityConfig.java[m
+[36m@@ -1,34 +1,35 @@[m
+[31m-//package com.efficientproject;[m
+[31m-//[m
+[31m-//import org.springframework.beans.factory.annotation.Autowired;[m
+[31m-//import org.springframework.context.annotation.Configuration;[m
+[31m-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;[m
+[31m-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;[m
+[31m-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;[m
+[31m-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;[m
+[31m-//[m
+[31m-//@Configuration[m
+[31m-//@EnableWebSecurity[m
+[31m-//public class WebSecurityConfig extends WebSecurityConfigurerAdapter{[m
+[31m-//	@Override[m
+[31m-//    protected void configure(HttpSecurity http) throws Exception {[m
+[31m-//        http[m
+[31m-//            .authorizeRequests()[m
+[31m-//                .antMatchers("/", "/home").permitAll()[m
+[31m-//                .anyRequest().authenticated()[m
+[31m-//                .and()[m
+[31m-//            .formLogin()[m
+[31m-//                .loginPage("/login")[m
+[31m-//                .permitAll()[m
+[31m-//                .and()[m
+[31m-//            .logout()[m
+[31m-//                .permitAll();[m
+[31m-//    }[m
+[31m-//[m
+[31m-//    @Autowired[m
+[31m-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {[m
+[31m-//        auth[m
+[31m-//            .inMemoryAuthentication()[m
+[31m-//                .withUser("user").password("password").roles("USER");[m
+[31m-//    }[m
+[31m-//}[m
+[32m+[m[32mpackage com.efficientproject;[m
+[32m+[m
+[32m+[m[32mimport org.springframework.beans.factory.annotation.Autowired;[m
+[32m+[m[32mimport org.springframework.context.annotation.Configuration;[m
+[32m+[m[32mimport org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;[m
+[32m+[m[32mimport org.springframework.security.config.annotation.web.builders.HttpSecurity;[m
+[32m+[m[32mimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;[m
+[32m+[m[32mimport org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;[m
+[32m+[m
+[32m+[m[32m@Configuration[m
+[32m+[m[32m@EnableWebSecurity[m
+[32m+[m[32mpublic class WebSecurityConfig extends WebSecurityConfigurerAdapter {[m
+[32m+[m[41m	[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mprotected void configure(HttpSecurity http) throws Exception {[m
+[32m+[m		[32mhttp.authorizeRequests()[m
+[32m+[m		[32m.antMatchers("/", "/webjars/**", "/img/**")[m
+[32m+[m		[32m.permitAll()[m
+[32m+[m		[32m.anyRequest()[m
+[32m+[m		[32m.authenticated()[m
+[32m+[m		[32m.and()[m
+[32m+[m		[32m.formLogin()[m
+[32m+[m		[32m.loginPage("/login").permitAll()[m
+[32m+[m		[32m.and()[m
+[32m+[m		[32m.logout().permitAll();[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m@Autowired[m
+[32m+[m	[32mpublic void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {[m
+[32m+[m		[32mauth.inMemoryAuthentication()[m
+[32m+[m		[32m.withUser("user").password("password").roles("USER")[m
+[32m+[m		[32m.and()[m
+[32m+[m		[32m.withUser("admin").password("password").roles("ADMIN");[m
+[32m+[m	[32m}[m
+[32m+[m[32m}[m
+[1mdiff --git a/src/main/resources/application.properties b/src/main/resources/application.properties[m
+[1mindex d109e67..628ceaf 100644[m
+[1m--- a/src/main/resources/application.properties[m
+[1m+++ b/src/main/resources/application.properties[m
+[36m@@ -19,10 +19,12 @@[m [mlogging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE[m
+ #security.user.password= concretepage[m
+ #prints default password---[m
+ #logging.level.org.springframework.boot.autoconfigure.security= INFO [m
+[31m-[m
+[32m+[m[32mspring.security.user.name=user[m
+[32m+[m[32mspring.security.user.password=[m
+ [m
+ spring.mvc.view.prefix=/WEB-INF/views/jsp/[m
+ spring.mvc.view.suffix=.jsp[m
+ [m
+[32m+[m[32mmanagement.endpoints.web.exposure.include=*[m
+ [m
+ #logging.level.org.springframework.web=DEBUG[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/webapp/WEB-INF/views/jsp/index.jsp b/src/main/webapp/WEB-INF/views/jsp/index.jsp[m
+[1mindex 8046a10..d72b5b2 100644[m
+[1m--- a/src/main/webapp/WEB-INF/views/jsp/index.jsp[m
+[1m+++ b/src/main/webapp/WEB-INF/views/jsp/index.jsp[m
+[36m
