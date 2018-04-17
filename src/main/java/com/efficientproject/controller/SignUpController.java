@@ -126,7 +126,7 @@ public class SignUpController {
 		// user.setPassword(Encrypter.encrypt(password));
 		// request.getSession().setAttribute("user", user);
 		// response.sendRedirect("./ProfileEdit");
-		return "redirect:./profile-edit";
+		return "redirect:/profile-edit";
 		// } catch (EfficientProjectDAOException | DBException | IOException |
 		// ServletException e) {
 		// try {

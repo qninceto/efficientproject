@@ -17,16 +17,15 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li ><a href="./workertasks">Dashboard <span
+				<li><a href="./workertasks">Dashboard <span
 						class="sr-only">(current)</span></a></li>
-				
-
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="./Logout">Log out</a></li>
+				<li><a href="/logout">Log out</a></li>
 				<li><a href="./Profile">${ sessionScope.user.firstName }</a></li>
-				<li><img id="avatar" src="./ImgOutputServlet?userid=${sessionScope.user.id}"></li>
+				<li><img id="avatar"
+					src="./ImgOutputServlet?userid=${sessionScope.user.id}"></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

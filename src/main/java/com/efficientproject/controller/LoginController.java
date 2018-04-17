@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.efficientproject.model.entity.User;
 
 @Controller
-public class LoginController  {
+public class LoginController {
 	@RequestMapping(value={"/login","/"},method = RequestMethod.GET)
-	protected String showLogin() {
+	public String showLogin() {
 			return "index";
 	}
 	
