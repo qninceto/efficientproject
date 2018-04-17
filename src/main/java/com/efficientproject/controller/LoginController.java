@@ -1,6 +1,7 @@
 package com.efficientproject.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,14 +10,15 @@ import com.efficientproject.model.entity.User;
 
 @Controller
 public class LoginController {
-	@RequestMapping(value={"/login","/"},method = RequestMethod.GET)
-	public String showLogin() {
-			return "index";
+	
+	@RequestMapping(value = { "/login", "/" }, method = RequestMethod.GET)
+	public String showLogin(Model model) {
+		model.addAttribute("user", new User());
+		return "index";
 	}
 	
 	@RequestMapping(value= {"/login","/"},method = RequestMethod.POST)
 	protected String login(@ModelAttribute("user") User user) {
-//		try {
 //			request.setCharacterEncoding("UTF-8");
 //			String email = request.getParameter("email");
 //			String password = request.getParameter("password");
@@ -42,15 +44,7 @@ public class LoginController {
 //			// Everything went well:
 //			request.getSession().setAttribute("user", user);
 //			response.sendRedirect("./dashboard");
-		return "redirect:./dashboard";
-//		} catch (DBException | EfficientProjectDAOException | ServletException | IOException e) {
-//			try {
-//				request.getRequestDispatcher("error.jsp").forward(request, response);
-//				e.printStackTrace();
-//			} catch (IOException | ServletException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
+		return "redirect:/dashboard";
 	}
 
 }

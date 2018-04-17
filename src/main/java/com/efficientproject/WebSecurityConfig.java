@@ -14,14 +14,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests().antMatchers("/", "/webjars/**", "/img/**", "/signup").permitAll()
+			.authorizeRequests().antMatchers("/", "/webjars/**", "/img/**", "/signup", "/js/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/login").permitAll()
 				.and()
 			.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-			.permitAll();
+//			.permitAll();
+			.and().exceptionHandling() //exception handling configuration
+			.accessDeniedPage("/app/error");//
 	}
 
 	@Autowired

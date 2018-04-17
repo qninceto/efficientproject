@@ -31,10 +31,10 @@ public class SignUpController {
 
 		model.addAttribute("user", new User());
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-		headers.add("Pragma", "no-cache"); // HTTP 1.0.
-		headers.add("Expires", "0"); // Proxies.
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//		headers.add("Pragma", "no-cache"); // HTTP 1.0.
+//		headers.add("Expires", "0"); // Proxies.
 
 		return "signup"; // new ResponseEntity<>("signup", headers, HttpStatus.OK);
 	}
