@@ -18,7 +18,7 @@
 
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript"/ src="/js/custom.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
 
 </head>
 <body  background="/img/Background1.jpg">
@@ -31,7 +31,7 @@
 		class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="panel-title">Sign in </div>
+				<div class="panel-title">Sign in</div>
 			</div>
 			<div class="panel-body">
 				<form:form id="login-form" modelAttribute="user" action="signup" method="post" class="form-horizontal">
@@ -53,7 +53,6 @@
 					<div class="form-group">
 						<form:label  path="lastName" class="col-md-3 control-label">Last Name</form:label >
 						<div class="col-md-9">
-							<form:label  path="lastName" class="col-md-3 control-label">Last Name</form:label >
 							<form:input type="text" path="lastName" name="last-name" 
 								class="form-control" placeholder="Last name" required="required"/>
 						</div>
@@ -91,14 +90,15 @@
 							name="isAdmin" value ="false" onclick="myFunction2()"/>
 							Register organization</label>
 					</div>
-
+	
+					<form:form  modelAttribute="organization" method="post">
 					<div class="form-group" style="display: none;" id="organization">
-						<form:label  path="organization" class="col-md-3 control-label">Organization name</form:label >
+						<form:label  path="name" class="col-md-3 control-label">Organization name</form:label >
 						<div class="col-md-9">
-							<form:input id="organization" path="organization"  type="text" name="organization" class="form-control" placeholder="Name"/>
+							<form:input id="organization" path="name"  type="text" name="organization" class="form-control" placeholder="Name"/>
 						</div>
 					</div>
-
+					</form:form>
 
 					<c:if test="${not empty errorMessage }">
 						<div class="form-group">

@@ -106,7 +106,7 @@ public class ProfileController extends HttpServlet {
 			if (avatarPartNotEmpty) {
 				String avatarPath = IMAGES_PATH + File.separator + userId + ".jpg";
 				File myFile = new File(avatarPath);
-
+				
 				if (!myFile.exists()) {
 					myFile.createNewFile();
 				}

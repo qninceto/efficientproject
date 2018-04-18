@@ -7,15 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 
@@ -30,6 +28,7 @@ public class SignUpController {
 	protected String startSignUp(Model model) {
 
 		model.addAttribute("user", new User());
+		model.addAttribute("organization", new Organization());
 
 //		HttpHeaders headers = new HttpHeaders();
 //		headers.add("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -40,9 +39,16 @@ public class SignUpController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	protected String signUpUser(@ModelAttribute("user") User user) {
+	protected String signUpUser (ModelMap map) {//(@ModelAttribute("user") User user) {
 
-		// try {
+		User user =new User();
+		Organization organization = new Organization();
+		map.addAttribute("user", user);
+		map.addAttribute("organization", organization);
+		
+		
+		
+		
 		// response.setCharacterEncoding("UTF-8");
 		// request.setCharacterEncoding("UTF-8");
 		// String firstName = escapeHtml4(request.getParameter("first-name")).trim();

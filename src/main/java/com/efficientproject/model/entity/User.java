@@ -2,6 +2,7 @@ package com.efficientproject.model.entity;
 
 import java.io.File;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class User {
 	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@NotNull
@@ -39,7 +40,7 @@ public class User {
 	private String avatarPath;
 	private boolean admin;
 	
-	@ManyToOne (fetch = FetchType.LAZY)// or eager?
+	@ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Organization.class)// or eager?
 	@JoinColumn(name = "organization_id", nullable = true)
 	private Organization organization;
 	
@@ -72,8 +73,6 @@ public class User {
 		this.organization = organization;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -106,6 +105,14 @@ public class User {
 		this.avatarPath = avatarPath;
 	}
 
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -113,8 +120,6 @@ public class User {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-
-
 
 	public String getFirstName() {
 		return firstName;
