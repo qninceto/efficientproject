@@ -3,6 +3,7 @@ package com.efficientproject.model.entity;
 import java.io.File;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.efficientproject.model.DAO.INFO;
+import com.efficientproject.util.PasswordMatches;
 
 @Entity
 @Table(name = "users")
+@PasswordMatches
 public class User {
 	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
 	
@@ -27,16 +32,21 @@ public class User {
 	
 	@NotNull
 	@Size(max = 45)
+	@Column(name = "first_name")
 	private String firstName;
 	
 	@NotNull
 	private String lastName;
 	
+	@Email(message = "*Please provide a valid Email")
+	@NotEmpty(message = "*Please provide an email")
 	@NotNull
 	private String email;
 	
 	@NotNull
+	@ValidPassword
 	private String password;
+	private String matchingPassword;
 	private String avatarPath;
 	private boolean admin;
 	
@@ -175,6 +185,14 @@ public class User {
 		} else if (!email.equals(other.email))
 			return false;
 		return true;
+	}
+
+	public String getMatchingPassword() {
+		return matchingPassword;
+	}
+
+	public void setMatchingPassword(String matchingPassword) {
+		this.matchingPassword = matchingPassword;
 	}
 
 }

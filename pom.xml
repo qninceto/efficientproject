@@ -86,13 +86,18 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>1.10.2</version>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator</artifactId>
 			<version>0.30</version>
 		</dependency>
 		<!-- js libs end -->
+		<dependency>
+			<groupId>org.passay</groupId>
+			<artifactId>passay</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>

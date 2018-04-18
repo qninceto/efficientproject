@@ -6,12 +6,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
@@ -25,23 +29,18 @@ public class SignUpController {
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	protected String startSignUp(Model model) {
+	protected String showSignUpForm(Model model) {
 
 		model.addAttribute("user", new User());
 		model.addAttribute("organization", new Organization());
 
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//		headers.add("Pragma", "no-cache"); // HTTP 1.0.
-//		headers.add("Expires", "0"); // Proxies.
-
-		return "signup"; // new ResponseEntity<>("signup", headers, HttpStatus.OK);
+		return "signup";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	protected String signUpUser (ModelMap map) {//(@ModelAttribute("user") User user) {
+	protected String signUpUser (ModelMap map, BindingResult bindingResult) {
 
-		User user =new User();
+		@Valid User user =new User();
 		Organization organization = new Organization();
 		map.addAttribute("user", user);
 		map.addAttribute("organization", organization);
@@ -77,17 +76,6 @@ public class SignUpController {
 		// return;
 		// }
 		//
-		// if (!CredentialsChecks.isMailValid(email)) {
-		// forwardWithErrorMessage(request, response, dispatcher,"Invalid e-mail! Try
-		// Again");
-		// return;
-		// }
-		//
-		// if (!password.equals(reppassword)) {
-		// forwardWithErrorMessage(request, response, dispatcher,"Passwords do no match
-		// please make sure they do!");
-		// return;
-		// }
 		//
 		// if (!CredentialsChecks.isPaswordStrong(password)) {
 		// forwardWithErrorMessage(request, response, dispatcher,"Password must contain
@@ -133,15 +121,6 @@ public class SignUpController {
 		// request.getSession().setAttribute("user", user);
 		// response.sendRedirect("./ProfileEdit");
 		return "redirect:/profile-edit";
-		// } catch (EfficientProjectDAOException | DBException | IOException |
-		// ServletException e) {
-		// try {
-		// request.getRequestDispatcher("error.jsp").forward(request, response);
-		// e.printStackTrace();
-		// } catch (IOException | ServletException e1) {
-		// e1.printStackTrace();
-		// }
-		// }
 	}
 
 	private void forwardWithErrorMessage(HttpServletRequest request, HttpServletResponse response,
