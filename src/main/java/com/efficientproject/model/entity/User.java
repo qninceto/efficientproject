@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import com.efficientproject.model.DAO.INFO;
 import com.efficientproject.util.PasswordMatches;
+import com.efficientproject.util.ValidPassword;
 
 @Entity
 @Table(name = "users")
@@ -33,11 +34,16 @@ public class User {
 	@NotNull
 	@Size(max = 45)
 	@Column(name = "first_name")
+	@NotEmpty(message = "*Empty first name! Try Again")
 	private String firstName;
 	
 	@NotNull
+	@Size(max = 45)
+	@Column(name = "last_name")
+	@NotEmpty(message = "*Empty last name! Try Again")
 	private String lastName;
 	
+	@Size(max = 45)
 	@Email(message = "*Please provide a valid Email")
 	@NotEmpty(message = "*Please provide an email")
 	@NotNull
@@ -45,6 +51,7 @@ public class User {
 	
 	@NotNull
 	@ValidPassword
+	@Size(max = 45)
 	private String password;
 	private String matchingPassword;
 	private String avatarPath;

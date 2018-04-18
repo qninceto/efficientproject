@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "organizations")
 public class Organization {
 
+	private static final int MAX_LENGTH_INPUT_CHARACTERS = 45;
+	
 	public List<User> getUsers() {
 		return users;
 	}
@@ -29,6 +32,7 @@ public class Organization {
 	private int id;
 
 	@NotNull
+	@Size(max = MAX_LENGTH_INPUT_CHARACTERS, message ="Characters number limit reached-no more than " + MAX_LENGTH_INPUT_CHARACTERS + "allowed")
 	private String name;
 
 	

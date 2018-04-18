@@ -25,7 +25,6 @@ import com.efficientproject.model.interfaces.DAOStorageSourse;
 public class SignUpController {
 
 	private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";
-	private static final int MAX_LENGTH_INPUT_CHARACTERS = 45;
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -60,16 +59,7 @@ public class SignUpController {
 		// boolean isAdmin = Boolean.parseBoolean(request.getParameter("isAdmin"));
 		//
 		// RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
-		//
-		// if (firstName.length() > MAX_LENGTH_INPUT_CHARACTERS || lastName.length() >
-		// MAX_LENGTH_INPUT_CHARACTERS
-		// || email.length() > MAX_LENGTH_INPUT_CHARACTERS || password.length() >
-		// MAX_LENGTH_INPUT_CHARACTERS
-		// || organization.length() > MAX_LENGTH_INPUT_CHARACTERS) {
-		// forwardWithErrorMessage(request, response, dispatcher,"Characters number
-		// limit reached-no more than " + MAX_LENGTH_INPUT_CHARACTERS + "allowed");
-		// return;
-		// }
+
 		// if(firstName.length()==0 || lastName.length()==0) {
 		// forwardWithErrorMessage(request, response, dispatcher,"Empty first or last
 		// name! Try Again");
