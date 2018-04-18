@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
 //			.permitAll();
 			.and().exceptionHandling() //exception handling configuration
-			.accessDeniedPage("/app/error");//
+			.accessDeniedPage("/error");//
 	}
 
 	@Autowired
