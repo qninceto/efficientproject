@@ -12,13 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.efficientproject.model.DAO.INFO;
 import com.efficientproject.util.PasswordMatches;
+import com.efficientproject.util.ValidEmail;
 import com.efficientproject.util.ValidPassword;
 
 @Entity
@@ -44,7 +44,7 @@ public class User {
 	private String lastName;
 	
 	@Size(max = 45)
-	@Email(message = "*Please provide a valid Email")
+	@ValidEmail
 	@NotEmpty(message = "*Please provide an email")
 	@NotNull
 	private String email;

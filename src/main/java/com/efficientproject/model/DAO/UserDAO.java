@@ -150,58 +150,58 @@ public class UserDAO extends AbstractDBConnDAO implements IUserDAO {
 		throw new EfficientProjectDAOException("Could not add!");
 	}
 
-	@Override
-	public User getUserById(int userID) throws UnsupportedDataTypeException, EfficientProjectDAOException, DBException {
-		if (userID < 0) {
-			throw new EfficientProjectDAOException("Invalid input!");
-		}
-		try {
+//	@Override
+//	public User getUserById(int userID) throws UnsupportedDataTypeException, EfficientProjectDAOException, DBException {
+//		if (userID < 0) {
+//			throw new EfficientProjectDAOException("Invalid input!");
+//		}
+//		try {
+//
+//			PreparedStatement ps = getCon().prepareStatement(SELECT_FROM_USERS_BY_ID);
+//			ps.setInt(1, userID);
+//
+//			ResultSet rs = ps.executeQuery();
+//
+//			if (rs.next()) {
+//				Organization organization = IOrganizationDAO.getDAO(SOURCE_DATABASE).getOrgById(rs.getInt(8));
+//				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+//						rs.getString(6), rs.getBoolean(7), organization, rs.getBoolean(9));
+//			}
+//			throw new EfficientProjectDAOException("could not find the user");
+//		} catch (SQLException e) {
+//			throw new DBException("Cannot check for user right now!Try again later", e);
+//
+//		}
+//	}
 
-			PreparedStatement ps = getCon().prepareStatement(SELECT_FROM_USERS_BY_ID);
-			ps.setInt(1, userID);
-
-			ResultSet rs = ps.executeQuery();
-
-			if (rs.next()) {
-				Organization organization = IOrganizationDAO.getDAO(SOURCE_DATABASE).getOrgById(rs.getInt(8));
-				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getBoolean(7), organization, rs.getBoolean(9));
-			}
-			throw new EfficientProjectDAOException("could not find the user");
-		} catch (SQLException e) {
-			throw new DBException("Cannot check for user right now!Try again later", e);
-
-		}
-	}
-
-	@Override
-	public User getUserByEmail(String email)
-			throws UnsupportedDataTypeException, EfficientProjectDAOException, DBException {
-		if (email == null) {
-			throw new EfficientProjectDAOException("Invalid input!");
-		}
-		try {
-			PreparedStatement ps = getCon().prepareStatement(SELECT_FROM_USERS_BY_EMAIL);
-			ps.setString(1, email);
-
-			ResultSet rs = ps.executeQuery();
-
-			if (rs.next()) {
-				Organization organization = null;
-				if (rs.getBoolean(7)) {
-					organization = IOrganizationDAO.getDAO(SOURCE_DATABASE).getOrgById(rs.getInt(8));
-				}
-				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getBoolean(7), organization, rs.getBoolean(9));
-			}
-			throw new EfficientProjectDAOException("could not fid the user");
-
-		} catch (SQLException e) {
-			throw new DBException("Cannot check for user right now!Try again later", e);
-
-		}
-
-	}
+//	@Override
+//	public User getUserByEmail(String email)
+//			throws UnsupportedDataTypeException, EfficientProjectDAOException, DBException {
+//		if (email == null) {
+//			throw new EfficientProjectDAOException("Invalid input!");
+//		}
+//		try {
+//			PreparedStatement ps = getCon().prepareStatement(SELECT_FROM_USERS_BY_EMAIL);
+//			ps.setString(1, email);
+//
+//			ResultSet rs = ps.executeQuery();
+//
+//			if (rs.next()) {
+//				Organization organization = null;
+//				if (rs.getBoolean(7)) {
+//					organization = IOrganizationDAO.getDAO(SOURCE_DATABASE).getOrgById(rs.getInt(8));
+//				}
+//				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+//						rs.getString(6), rs.getBoolean(7), organization, rs.getBoolean(9));
+//			}
+//			throw new EfficientProjectDAOException("could not fid the user");
+//
+//		} catch (SQLException e) {
+//			throw new DBException("Cannot check for user right now!Try again later", e);
+//
+//		}
+//
+//	}
 
 	@Override
 	public boolean isThereSuchAUser(String email) throws DBException, EfficientProjectDAOException {

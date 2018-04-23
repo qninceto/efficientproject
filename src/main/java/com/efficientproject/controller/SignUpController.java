@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,14 +22,23 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
+import com.efficientproject.model.exceptions.UserAlreadyExistException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
+import com.efficientproject.service.IUserService;
 
 @Controller
 public class SignUpController {
 
-	private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";
-	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
+//	private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";
+//	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
+	 private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
+	 @Autowired
+	 private IUserService userService;
+
+	 public SignUpController() {
+	}
+	 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	protected String showSignUpForm(Model model) {
 
@@ -37,14 +49,18 @@ public class SignUpController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	protected String signUpUser (ModelMap map, BindingResult bindingResult) {
+	protected String signUpUser (@Valid User account, ModelMap map, BindingResult bindingResult) {
 
-		@Valid User user =new User();
+		User registered =new User();
 		Organization organization = new Organization();
-		map.addAttribute("user", user);
+		map.addAttribute("user", account);
 		map.addAttribute("organization", organization);
-		
-		
+		if (!bindingResult.hasErrors()) {
+	        registered = createUserAccount(account, bindingResult);
+	    }
+	    if (registered == null) {
+	    	bindingResult.rejectValue("email", "message.regError");
+	    }
 		
 		
 		// response.setCharacterEncoding("UTF-8");
@@ -60,13 +76,6 @@ public class SignUpController {
 		//
 		// RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
 
-		// if(firstName.length()==0 || lastName.length()==0) {
-		// forwardWithErrorMessage(request, response, dispatcher,"Empty first or last
-		// name! Try Again");
-		// return;
-		// }
-		//
-		//
 		// if (!CredentialsChecks.isPaswordStrong(password)) {
 		// forwardWithErrorMessage(request, response, dispatcher,"Password must contain
 		// 5 symbols and at least one number and letter");
@@ -105,23 +114,29 @@ public class SignUpController {
 		// UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserAdmin(user);
 		// }
 		// user.setId(UserId);
+		
 		// SendingMails.sendEmail(email, SEND_EMAIL_SUBJECT,
 		// messageContent(firstName,lastName,password));
 		// user.setPassword(Encrypter.encrypt(password));
+		
 		// request.getSession().setAttribute("user", user);
-		// response.sendRedirect("./ProfileEdit");
 		return "redirect:/profile-edit";
 	}
 
-	private void forwardWithErrorMessage(HttpServletRequest request, HttpServletResponse response,
-			RequestDispatcher dispatcher, String errorMessage) throws ServletException, IOException {
-		request.setAttribute("errorMessage", errorMessage);
-		dispatcher.forward(request, response);
+	private User createUserAccount(User account, BindingResult result) {
+	    User registered = null;
+	    try {
+	        registered = userService.registerNewUserAccount(account);
+	    } catch (UserAlreadyExistException e) {
+	        return null;
+	    }    
+	    return registered;
 	}
+	
 
-	private String messageContent(String firstName, String lastName, String password) {
-		return "Dear " + firstName + " " + lastName + ", "
-				+ "\n\n you succesfully signed into our website efficientproject.bj!" + "\n\n Your password is: "
-				+ password;
-	}
+//	private String messageContent(String firstName, String lastName, String password) {
+//		return "Dear " + firstName + " " + lastName + ", "
+//				+ "\n\n you succesfully signed into our website efficientproject.bj!" + "\n\n Your password is: "
+//				+ password;
+//	}
 }
