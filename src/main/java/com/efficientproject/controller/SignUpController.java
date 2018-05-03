@@ -45,7 +45,7 @@ public class SignUpController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public  ModelAndView signUpUser (@Valid UserDto accountDto, ModelMap map, BindingResult bindingResult) {
 
-		User registered =new User();
+		User registered = new User();
 		Organization organization = new Organization();
 		map.addAttribute("user", accountDto);
 		map.addAttribute("organization", organization);//org dto
@@ -67,7 +67,6 @@ public class SignUpController {
 		// String organization =
 		// escapeHtml4(request.getParameter("organization")).trim();
 
-	    // RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
 
 		// if (!CredentialsChecks.isPaswordStrong(password)) {
 		// forwardWithErrorMessage(request, response, dispatcher,"Password must contain
@@ -75,11 +74,7 @@ public class SignUpController {
 		// return;
 		// }
 		//
-		// if (IUserDAO.getDAO(SOURCE_DATABASE).isThereSuchAUser(email)) {
-		// forwardWithErrorMessage(request, response, dispatcher,"User with such email
-		// already exists, use another email !");
-		// return;
-		// }
+
 		//
 		// if
 		// (IOrganizationDAO.getDAO(SOURCE_DATABASE).isThereSuchOrganization(organization))

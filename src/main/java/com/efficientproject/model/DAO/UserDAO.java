@@ -22,7 +22,7 @@ import com.efficientproject.util.Encrypter;
 
 public class UserDAO extends AbstractDBConnDAO implements IUserDAO {
 
-	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
+//	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
 	private static final String INSERT_ADMIN_INTO_DB = "INSERT into users values(null,?,?,?,?,?,?,?,?);";
 	private static final String INSERT_USER_INTO_DB = "INSERT into users values(null,?,?,?,?,?,?,null,?);";
 	private static final String SELECT_FROM_USERS_BY_EMAIL = "Select * from users where email=?;";

@@ -17,54 +17,44 @@ import javax.validation.constraints.Size;
 @Table(name = "organizations")
 public class Organization {
 
-	private static final int MAX_LENGTH_INPUT_CHARACTERS = 45;
-	
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@NotNull
-	@Size(max = MAX_LENGTH_INPUT_CHARACTERS, message ="Characters number limit reached-no more than " + MAX_LENGTH_INPUT_CHARACTERS + "allowed")
+	@Size(max = 45, message ="{Size.organization.name}")
 	private String name;
 
-	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = User.class)
 	private List<User> users = new ArrayList<>();
 
-	public Organization(int id, String name) {
-		this(name);
-		this.id = id;
-	}
-
 	public Organization() {
-	}
-
-	public Organization(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		/*no op
+		 */
 	}
 
 	public int getId() {
 		return id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override
