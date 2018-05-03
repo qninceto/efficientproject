@@ -23,37 +23,25 @@ import com.efficientproject.util.ValidPassword;
 
 @Entity
 @Table(name = "users")
-@PasswordMatches
 public class User {
-	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@NotNull
-	@Size(max = 45)
+	
+	
 	@Column(name = "first_name")
-	@NotEmpty(message = "*Empty first name! Try Again")
 	private String firstName;
 	
-	@NotNull
-	@Size(max = 45)
+	
 	@Column(name = "last_name")
-	@NotEmpty(message = "*Empty last name! Try Again")
 	private String lastName;
 	
-	@Size(max = 45)
-	@ValidEmail
-	@NotEmpty(message = "*Please provide an email")
-	@NotNull
 	private String email;
 	
-	@NotNull
-	@ValidPassword
-	@Size(max = 45)
 	private String password;
-	private String matchingPassword;
+	
 	private String avatarPath;
 	private boolean admin;
 	
@@ -61,34 +49,37 @@ public class User {
 	@JoinColumn(name = "organization_id", nullable = true)
 	private Organization organization;
 	
+	@Column(name = "is_employed")
 	private boolean isEmployed = false;
 
 	public User() {
+		/*no op
+		 */
 	}
 
-	public User(int id, String firstName, String lastName, String email, String password, String avatarPath,
-			boolean admin, Organization organization, boolean isEmployed) {
-		this(firstName, lastName, email, password, admin, organization);
-		this.id = id;
-		this.avatarPath = avatarPath;
-		this.isEmployed = isEmployed;
-	}
-
-	public User(String firstName, String lastName, String email, String password, boolean admin) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.admin = admin;
-		this.avatarPath = DEFAUL_AVATAR_PATH;
-	}
-
-	public User(String firstName, String lastName, String email, String password, boolean admin,
-			Organization organization) {
-		this(firstName, lastName, email, password, admin);
-		this.organization = organization;
-	}
+//	public User(int id, String firstName, String lastName, String email, String password, String avatarPath,
+//			boolean admin, Organization organization, boolean isEmployed) {
+//		this(firstName, lastName, email, password, admin, organization);
+//		this.id = id;
+//		this.avatarPath = avatarPath;
+//		this.isEmployed = isEmployed;
+//	}
+//
+//	public User(String firstName, String lastName, String email, String password, boolean admin) {
+//		super();
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.password = password;
+//		this.admin = admin;
+//		this.avatarPath = DEFAUL_AVATAR_PATH;
+//	}
+//
+//	public User(String firstName, String lastName, String email, String password, boolean admin,
+//			Organization organization) {
+//		this(firstName, lastName, email, password, admin);
+//		this.organization = organization;
+//	}
 
 	public int getId() {
 		return id;
@@ -164,9 +155,18 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", avatarPath=" + avatarPath + ", admin=" + admin + ", organization="
-				+ organization + ", isEmployed=" + isEmployed + "]";
+		final StringBuilder builder = new StringBuilder();
+		builder
+		.append("User [id=").append(id)
+		.append(", firstName=").append(firstName)
+		.append(", lastName=").append(lastName)
+		.append(", email=").append(email)
+		.append(", password=").append(password)
+		.append(", avatarPath=").append(avatarPath)
+		.append(", admin=").append(admin)
+		.append(", organization=").append(organization)
+		.append(", isEmployed=").append(isEmployed).append("]");
+		return builder.toString();
 	}
 
 	@Override
@@ -194,12 +194,6 @@ public class User {
 		return true;
 	}
 
-	public String getMatchingPassword() {
-		return matchingPassword;
-	}
 
-	public void setMatchingPassword(String matchingPassword) {
-		this.matchingPassword = matchingPassword;
-	}
 
 }
