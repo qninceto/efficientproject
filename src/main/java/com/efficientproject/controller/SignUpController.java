@@ -1,11 +1,5 @@
 package com.efficientproject.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -15,48 +9,48 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.efficientproject.dto.UserDto;
 import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
 import com.efficientproject.model.exceptions.UserAlreadyExistException;
-import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.service.IUserService;
 
 @Controller
 public class SignUpController {
 
 //	private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";
-//	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
-	 private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	 @Autowired
 	 private IUserService userService;
 
 	 public SignUpController() {
+			/*no op
+			 */
 	}
 	 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	protected String showSignUpForm(Model model) {
-
-		model.addAttribute("user", new User());
-		model.addAttribute("organization", new Organization());
+	public String showSignUpForm(Model model) {
+		
+		UserDto userDto = new UserDto();
+		model.addAttribute("user", userDto);
+		model.addAttribute("organization", new Organization()); //org dto
 
 		return "signup";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	protected String signUpUser (@Valid User account, ModelMap map, BindingResult bindingResult) {
+	public  ModelAndView signUpUser (@Valid UserDto accountDto, ModelMap map, BindingResult bindingResult) {
 
 		User registered =new User();
 		Organization organization = new Organization();
-		map.addAttribute("user", account);
-		map.addAttribute("organization", organization);
+		map.addAttribute("user", accountDto);
+		map.addAttribute("organization", organization);//org dto
 		if (!bindingResult.hasErrors()) {
-	        registered = createUserAccount(account, bindingResult);
+	        registered = createUserAccount(accountDto, bindingResult);
 	    }
 	    if (registered == null) {
 	    	bindingResult.rejectValue("email", "message.regError");
@@ -72,9 +66,8 @@ public class SignUpController {
 		// String reppassword = escapeHtml4(request.getParameter("repPassword"));
 		// String organization =
 		// escapeHtml4(request.getParameter("organization")).trim();
-		// boolean isAdmin = Boolean.parseBoolean(request.getParameter("isAdmin"));
-		//
-		// RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
+
+	    // RequestDispatcher dispatcher = request.getRequestDispatcher("./signUp.jsp");
 
 		// if (!CredentialsChecks.isPaswordStrong(password)) {
 		// forwardWithErrorMessage(request, response, dispatcher,"Password must contain
@@ -101,32 +94,26 @@ public class SignUpController {
 		// is empty !");
 		// return;
 		// }
-		//
-		// // adding the user to the database:
-		// User user = null;
-		// int UserId;
-		// if (!isAdmin) {
-		// user = new User(firstName, lastName, email, password, false);
-		// UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserWorker(user);
-		// } else {
-		// user = new User(firstName, lastName, email, password, true, new
-		// Organization(organization));
-		// UserId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).addUserAdmin(user);
-		// }
-		// user.setId(UserId);
+
+	    
+
 		
 		// SendingMails.sendEmail(email, SEND_EMAIL_SUBJECT,
 		// messageContent(firstName,lastName,password));
 		// user.setPassword(Encrypter.encrypt(password));
 		
 		// request.getSession().setAttribute("user", user);
-		return "redirect:/profile-edit";
+	    if (bindingResult.hasErrors()) {
+	    	return new ModelAndView("signup", "user", accountDto);
+	    }else {
+	    	return new ModelAndView("redirect:/profile-edit", "user", accountDto);//????
+	    }
 	}
 
-	private User createUserAccount(User account, BindingResult result) {
+	private User createUserAccount(UserDto accountDto, BindingResult result) {
 	    User registered = null;
 	    try {
-	        registered = userService.registerNewUserAccount(account);
+	        registered = userService.registerNewUserAccount(accountDto);
 	    } catch (UserAlreadyExistException e) {
 	        return null;
 	    }    
