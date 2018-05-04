@@ -2,20 +2,21 @@ package com.efficientproject.controller;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.efficientproject.dto.OrganizationDto;
 import com.efficientproject.dto.UserDto;
-import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
+import com.efficientproject.model.exceptions.OrganizationAlreadyExistException;
 import com.efficientproject.model.exceptions.UserAlreadyExistException;
 import com.efficientproject.service.IUserService;
 
@@ -36,21 +37,22 @@ public class SignUpController {
 	public String showSignUpForm(Model model) {
 		
 		UserDto userDto = new UserDto();
+		OrganizationDto orgDto = new OrganizationDto();
+		
 		model.addAttribute("user", userDto);
-		model.addAttribute("organization", new Organization()); //org dto
+		model.addAttribute("organization", orgDto);
 
 		return "signup";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public  ModelAndView signUpUser (@Valid UserDto accountDto, ModelMap map, BindingResult bindingResult) {
+	public  ModelAndView signUpUser(@ModelAttribute("user") @Valid UserDto accountDto, @ModelAttribute("organization")OrganizationDto orgDto, BindingResult bindingResult){
 
 		User registered = new User();
-		Organization organization = new Organization();
-		map.addAttribute("user", accountDto);
-		map.addAttribute("organization", organization);//org dto
+		organizationValidation(accountDto, orgDto, bindingResult);
+		/*Organization organization = new Organization();*/
 		if (!bindingResult.hasErrors()) {
-	        registered = createUserAccount(accountDto, bindingResult);
+	        registered = createUserAccount(accountDto);
 	    }
 	    if (registered == null) {
 	    	bindingResult.rejectValue("email", "message.regError");
@@ -105,11 +107,18 @@ public class SignUpController {
 	    }
 	}
 
-	private User createUserAccount(UserDto accountDto, BindingResult result) {
+	private void organizationValidation( BindingResult bindingResult) {
+		 if (accountDto.isAdmin()) {
+			 
+			 bindingResult.
+		 }
+	}
+
+	private User createUserAccount(UserDto accountDto){
 	    User registered = null;
 	    try {
 	        registered = userService.registerNewUserAccount(accountDto);
-	    } catch (UserAlreadyExistException e) {
+	    } catch (UserAlreadyExistException | OrganizationAlreadyExistException e) {
 	        return null;
 	    }    
 	    return registered;

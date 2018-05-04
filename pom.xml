@@ -25,6 +25,8 @@
 		<mysql.version>8.0.8-dmr</mysql.version>
 		<!-- <hibernate.validator.version>5.2.4.Final</hibernate.validator.version> -->
 		<!-- <hibernate.version>4.3.11.Final</hibernate.version> -->
+		<!-- guava -->
+		<guava.version>20.0</guava.version>
 	</properties>
 
 	<dependencies>
@@ -51,12 +53,17 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.passay</groupId>
 			<artifactId>passay</artifactId>
 			<version>1.0</version>
+			</dependency> -->
+	
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>

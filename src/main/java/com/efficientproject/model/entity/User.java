@@ -52,10 +52,6 @@ public class User {
 	@Column(name = "is_employed")
 	private boolean isEmployed = false;
 
-	public User() {
-		/*no op
-		 */
-	}
 
 //	public User(int id, String firstName, String lastName, String email, String password, String avatarPath,
 //			boolean admin, Organization organization, boolean isEmployed) {

@@ -100,7 +100,7 @@
 					</div>
 					</form:form>
 
-					<c:if test="${not empty errorMessage }">
+					<c:if test="${not empty errorMessage}">
 						<div class="form-group">
 							<div class="col-md-offset-3 col-md-9">
 								<span style="color: red"> <c:out

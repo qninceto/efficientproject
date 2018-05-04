@@ -2,6 +2,8 @@ package com.efficientproject.service;
 
 import java.io.File;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,6 @@ import com.efficientproject.model.entity.Organization;
 import com.efficientproject.model.entity.User;
 import com.efficientproject.model.exceptions.OrganizationAlreadyExistException;
 import com.efficientproject.model.exceptions.UserAlreadyExistException;
-import com.efficientproject.repository.OrganizationReposiory;
 import com.efficientproject.repository.UserRepository;
 
 @Service("userService")
@@ -20,18 +21,19 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private UserRepository repository;
-
+	
 	@Autowired
-	private OrganizationReposiory orgRepository;
+	private OrganizationServiceImpl orgServiceImpl;
 
+	@Transactional
 	@Override
-
 	public User registerNewUserAccount(UserDto accountDto)
 			throws UserAlreadyExistException, OrganizationAlreadyExistException {
 
 		if (emailExist(accountDto.getEmail())) {
 			throw new UserAlreadyExistException("{UniqueUsername.user.username}" + accountDto.getEmail());
 		}
+		
 		User user = new User();
 		user.setFirstName(accountDto.getFirstName());
 		user.setLastName(accountDto.getLastName());
@@ -41,30 +43,18 @@ public class UserServiceImpl implements IUserService {
 		boolean admin = accountDto.isAdmin();
 		user.setAdmin(admin);// Arrays.asList("ROLE_USER","ROLE_ADMIN"));??
 		if (admin) {
-			Organization organization = new Organization();
-			if (organizationExists(accountDto.getOrganization())) {
-				throw new OrganizationAlreadyExistException(
-						"{UniqueOrganization.organization.name}" + organization.getName());
-			}
+			orgServiceImpl.registerOrganization(orgDto);
+			
 			user.setOrganization(accountDto.getOrganization());
 		}
 		return repository.save(user);
 	}
 
-	private boolean organizationExists(String name) {
-		Organization org = orgRepository.findByName(name);
-		if (org != null) {
-			return true;
-		}
-		return false;
-	}
+	
 
 	private boolean emailExist(String email) {
 		User user = repository.findByEmail(email);
-		if (user != null) {
-			return true;
-		}
-		return false;
+		return user != null;
 	}
 
 }
