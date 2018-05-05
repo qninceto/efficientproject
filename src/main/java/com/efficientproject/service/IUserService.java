@@ -7,6 +7,6 @@ import com.efficientproject.model.exceptions.UserAlreadyExistException;
 
 public interface IUserService {
 
-	User registerNewUserAccount(UserDto account)  throws UserAlreadyExistException, OrganizationAlreadyExistException;
+	User registerNewUserAccount(UserDto account);
 
 }

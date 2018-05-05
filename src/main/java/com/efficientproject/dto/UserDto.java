@@ -30,7 +30,7 @@ public class UserDto {
 
 	@NotNull
 	@ValidPassword
-	@Size(max = 45)
+	@Size(max = 100)
 	private String password;
 
 	private String matchingPassword;
@@ -38,10 +38,10 @@ public class UserDto {
 	private String avatarPath;
 
 	private boolean admin;
+	
+	@Size(max = 45, message ="{Size.organization.name}")
+	private String organizationName;
 
-	private Organization organization;
-
-	@NotNull
 	private boolean isEmployed = false;
 
 	public String getAvatarPath() {
@@ -62,10 +62,6 @@ public class UserDto {
 
 	public String getMatchingPassword() {
 		return matchingPassword;
-	}
-
-	public Organization getOrganization() {
-		return organization;
 	}
 
 	public String getPassword() {
@@ -105,11 +101,15 @@ public class UserDto {
 		this.matchingPassword = matchingPassword;
 	}
 
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 }

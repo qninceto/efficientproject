@@ -2,62 +2,41 @@ package com.efficientproject.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.efficientproject.dto.OrganizationDto;
 import com.efficientproject.dto.UserDto;
-import com.efficientproject.model.entity.User;
-import com.efficientproject.model.exceptions.OrganizationAlreadyExistException;
-import com.efficientproject.model.exceptions.UserAlreadyExistException;
 import com.efficientproject.service.IUserService;
+import com.efficientproject.util.GenericResponse;
 
 @Controller
 public class SignUpController {
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	/*private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";*/
 
-//	private static final String SEND_EMAIL_SUBJECT = "efficientproject sign up";
+	@Autowired
+	private IUserService userService;
 
-	 @Autowired
-	 private IUserService userService;
-
-	 public SignUpController() {
-			/*no op
-			 */
-	}
-	 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String showSignUpForm(Model model) {
-		
-		UserDto userDto = new UserDto();
-		OrganizationDto orgDto = new OrganizationDto();
-		
-		model.addAttribute("user", userDto);
-		model.addAttribute("organization", orgDto);
-
-		return "signup";
+	public String showSignUpForm() {
+		return "signup.html";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public  ModelAndView signUpUser(@ModelAttribute("user") @Valid UserDto accountDto, @ModelAttribute("organization")OrganizationDto orgDto, BindingResult bindingResult){
-
-		User registered = new User();
-		organizationValidation(accountDto, orgDto, bindingResult);
-		/*Organization organization = new Organization();*/
-		if (!bindingResult.hasErrors()) {
-	        registered = createUserAccount(accountDto);
-	    }
-	    if (registered == null) {
-	    	bindingResult.rejectValue("email", "message.regError");
-	    }
+	@ResponseBody
+	public  GenericResponse signUpUser(@Valid final UserDto accountDto){
 		
+		LOGGER.debug("Registering user account with information: {}", accountDto);
+		
+		userService.registerNewUserAccount(accountDto);
+		
+		return new GenericResponse("success");
+	}
 		
 		// response.setCharacterEncoding("UTF-8");
 		// request.setCharacterEncoding("UTF-8");
@@ -69,13 +48,6 @@ public class SignUpController {
 		// String organization =
 		// escapeHtml4(request.getParameter("organization")).trim();
 
-
-		// if (!CredentialsChecks.isPaswordStrong(password)) {
-		// forwardWithErrorMessage(request, response, dispatcher,"Password must contain
-		// 5 symbols and at least one number and letter");
-		// return;
-		// }
-		//
 
 		//
 		// if
@@ -100,29 +72,11 @@ public class SignUpController {
 		// user.setPassword(Encrypter.encrypt(password));
 		
 		// request.getSession().setAttribute("user", user);
-	    if (bindingResult.hasErrors()) {
-	    	return new ModelAndView("signup", "user", accountDto);
-	    }else {
-	    	return new ModelAndView("redirect:/profile-edit", "user", accountDto);//????
-	    }
-	}
-
-	private void organizationValidation( BindingResult bindingResult) {
-		 if (accountDto.isAdmin()) {
-			 
-			 bindingResult.
-		 }
-	}
-
-	private User createUserAccount(UserDto accountDto){
-	    User registered = null;
-	    try {
-	        registered = userService.registerNewUserAccount(accountDto);
-	    } catch (UserAlreadyExistException | OrganizationAlreadyExistException e) {
-	        return null;
-	    }    
-	    return registered;
-	}
+//	    if (bindingResult.hasErrors()) {
+//	    	return new ModelAndView("signup", "user", accountDto);
+//	    }else {
+//	    	return new ModelAndView("redirect:/profile-edit", "user", accountDto);//????
+//	    }
 	
 
 //	private String messageContent(String firstName, String lastName, String password) {

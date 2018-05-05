@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `efficientproject`.`users` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
   `avatar_path` VARCHAR(200) NULL DEFAULT NULL,
   `admin` TINYINT(4) NOT NULL,
   `organization_id` INT(11) NULL DEFAULT NULL,

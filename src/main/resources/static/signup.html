@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+<title>Efficient Project</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</head>
+<body  background="/img/Background1.jpg">
+	<div class="text-info">
+		<div class="text-left">
+			<h1>Efficient Project</h1>
+		</div>
+	</div>
+	
+	<div id="loginbox" style="margin-top: 50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">Sign in</div>
+			</div>
+			<div class="panel-body">
+				<form id="login-form" action="signup" method="post" enctype="utf8" class="form-horizontal">
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">First Name</label>
+						<div class="col-md-9">
+							<input type="text" name="firstName" 
+								class="form-control" placeholder="First name" required="required"/>
+							<span id="firstNameError" style="display:none"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Last Name</label >
+						<div class="col-md-9">
+							<input type="text"  name="lastName" 
+								class="form-control" placeholder="Last name" required="required"/>
+							<span id="lastNameError" style="display:none"></span>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Email</label >
+						<div class="col-md-9">
+							<input type="email"  name="email" 
+								class="form-control" placeholder="Email Address" required="required"/>
+							<span id="emailNameError" style="display:none"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+					<label class="col-md-3 control-label">Password</label >
+						<div class="col-md-9">
+							<input id="password" type="password"  name="password" 
+								class="form-control" placeholder="Password" required="required"/>
+							<span id="passwordError" style="display:none"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Repeat Password</label>
+						<div class="col-md-9">
+							<input id="matchingPassword" type="password" name="matchingPassword" 
+								class="form-control" placeholder="Repeat Password" required="required"/>
+							<span id="globalError" style="display:none"></span>
+						</div>
+					</div>
+
+					<div class="checkbox">
+						<label><checkbox id="isAdmin" name="isAdmin" value ="false" onclick="organizationRegistration()"/>
+							Register organization</label>
+					</div>
+	
+					<div class="form-group" style="display: none;" id="organization">
+						<label  class="col-md-3 control-label">Organization name</label >
+						<div class="col-md-9">
+							<input id="organization" type="text" name="organization" class="form-control" placeholder="Name"/>
+							<span id="organizationNameError" style="display:none"></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<!-- Button -->
+						<div class="col-md-offset-3 col-md-9">
+							<button onclick="register()" type="submit" class="btn btn-info">Sign up</button>
+							<span style="margin-left: 8px;">Already a member?
+								<a	href="./login">Log in here</a></span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

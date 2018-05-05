@@ -1,0 +1,75 @@
+
+<!DOCTYPE html><html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Efficient Project</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" hrgvef="/webjars/bootstrap/css/bootstrap.min.css" />
+	
+	<link href="bootstrap/css/simple-sidebar.css" rel="stylesheet">
+<!-- 	<link rel="stylesheet" type="text/css"	href="font-awesome/css/font-awesome.min.css" /> -->
+	<link rel="stylesheet" type="text/css" href="customCSS/styles.css">
+	
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>	
+</head>
+
+<body>
+	<c:if test="${ sessionScope.user == null }">
+		<c:redirect url="/LogIn"></c:redirect>
+	</c:if>
+
+	<c:choose>
+		<c:when test="${sessionScope.user.admin}">
+			<jsp:include page="navBarAdmin.jsp"></jsp:include>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="navBarWorker.jsp"></jsp:include>
+		</c:otherwise>
+	</c:choose>
+
+	<div id="wrapper" class="toggled">
+
+		<c:choose>
+			<c:when test="${sessionScope.user.admin}">
+				<jsp:include page="sidebarAdmin.jsp"></jsp:include>
+			</c:when>
+			<c:otherwise>
+				<jsp:include page="sidebarWorker.jsp"></jsp:include>
+			</c:otherwise>
+		</c:choose>
+
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="span2">
+
+					<!--  <img src="./ImgOutputServlet?image=user.jpg" alt="" class="img-rounded"
+			width="200" height=auto>	  -->
+
+					<img src="./ImgOutputServlet?userid=${sessionScope.user.id}" alt="" class="img-rounded"
+						width="200" height=auto>
+				</div>
+				<div class="span4">
+					<blockquote>
+						<c:out
+							value="${sessionScope.user.firstName }  ${ sessionScope.user.lastName }"></c:out>
+					</blockquote>
+					<p>
+
+						<i class="fa fa-envelope"></i> ${ sessionScope.user.email } <br>
+						<c:if test="${ sessionScope.user.admin == true }">
+							<c:out value="admin at: ${ sessionScope.user.organization.name }"></c:out>
+						</c:if>
+
+					</p>
+				</div>
+
+				<a href="./ProfileEdit"> <input type="button" value="Edit profile" />
+
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
