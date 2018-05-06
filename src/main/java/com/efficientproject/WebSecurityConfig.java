@@ -17,24 +17,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests().antMatchers("/", "/webjars/**", "/img/**", "/signup", "/js/**", "/v2/api-docs/**", "/swagger.json", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+			.csrf().disable()//that fucking crap?!?!?!?!?
+			.authorizeRequests()
+				.antMatchers("/login*", "/", "/webjars/**", "/img/**", "/signup*", "/js/**", "/v2/api-docs/**",
+					"/swagger.json", "/swagger-ui.html", "/swagger-resources/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
-				.loginPage("/login").permitAll()
+				.loginPage("/login")
+				.defaultSuccessUrl("/dashboard")//?
+				.failureUrl("/login?error=true")
 				.and()
-			.logout().logoutSuccessUrl("/login")
-//			.permitAll();
-			.and().exceptionHandling() 
-			.accessDeniedPage("/error");//
+			.logout()
+				.logoutSuccessUrl("/login")
+ 				.permitAll()
+ 				.and()
+ 			.exceptionHandling() 
+			/*.accessDeniedPage("/error")*/;//
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-		.withUser("user").password("password").roles("USER")
-		.and()
-		.withUser("admin").password("password").roles("ADMIN");
+			.withUser("user").password("password").roles("USER")
+				.and()
+			.withUser("admin").password("password").roles("ADMIN");
 	}
 	
 	@Bean

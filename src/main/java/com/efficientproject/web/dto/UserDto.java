@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.efficientproject.persistance.model.Organization;
-import com.efficientproject.util.PasswordMatches;
-import com.efficientproject.util.ValidEmail;
-import com.efficientproject.util.ValidPassword;
+import com.efficientproject.validator.PasswordMatches;
+import com.efficientproject.validator.ValidEmail;
+import com.efficientproject.validator.ValidPassword;
 
 @PasswordMatches
 public class UserDto {
@@ -40,7 +40,7 @@ public class UserDto {
 	private boolean admin;
 	
 	@Size(max = 45, message ="{Size.organization.name}")
-	private String organizationName;
+	private String organization;
 
 	private boolean isEmployed = false;
 
@@ -105,11 +105,11 @@ public class UserDto {
 		this.password = password;
 	}
 
-	public String getOrganizationName() {
-		return organizationName;
+	public String getOrganization() {
+		return organization;
 	}
 
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 }

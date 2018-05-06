@@ -38,17 +38,6 @@ public class SignUpController {
 		return new GenericResponse("success");
 	}
 		
-		// response.setCharacterEncoding("UTF-8");
-		// request.setCharacterEncoding("UTF-8");
-		// String firstName = escapeHtml4(request.getParameter("first-name")).trim();
-		// String lastName = escapeHtml4(request.getParameter("last-name")).trim();
-		// String email = escapeHtml4(request.getParameter("email")).trim();
-		// String password = escapeHtml4(request.getParameter("password"));
-		// String reppassword = escapeHtml4(request.getParameter("repPassword"));
-		// String organization =
-		// escapeHtml4(request.getParameter("organization")).trim();
-
-		
 		// SendingMails.sendEmail(email, SEND_EMAIL_SUBJECT,
 		// messageContent(firstName,lastName,password));
 		// user.setPassword(Encrypter.encrypt(password));

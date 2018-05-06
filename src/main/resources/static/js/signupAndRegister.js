@@ -1,6 +1,6 @@
 function organizationRegistration() {
 	var x = document.getElementById("organization");
-	var y = document.getElementById("isAdmin");
+	var y = document.getElementById("admin");
 
 	if (x.style.display === "block") {
 		x.style.display = "none";
@@ -23,11 +23,12 @@ function register(event){
 	event.preventDefault();
 	$(".alert").html("").hide();
 	$(".error-list").html("");
-    if($("#password").val() != $("#matchPassword").val()){
+    if($("#password").val() != $("#matchingPassword").val()){
     	$("#globalError").show().html("Passwords do not match");
     	return;
     }
     var formData= $('form').serialize();
+    console.log(formData);
     $.post(serverContext + "/signup", formData, function(data){
         if(data.message == "success"){
         	window.location.href = serverContext +"profileEdit.html";

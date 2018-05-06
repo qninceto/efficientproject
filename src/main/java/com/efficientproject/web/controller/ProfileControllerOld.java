@@ -30,7 +30,6 @@ import com.efficientproject.web.error.DBException;
 import com.efficientproject.web.error.EfficientProjectDAOException;
 
 @MultipartConfig(maxFileSize = 16177215) 
-@Controller
 @RequestMapping(value="/profile-edit")
 //ex ProfileEditServlet!
 public class ProfileControllerOld extends HttpServlet {

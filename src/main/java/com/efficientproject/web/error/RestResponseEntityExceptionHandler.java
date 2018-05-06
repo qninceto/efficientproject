@@ -33,6 +33,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 	
+    @ExceptionHandler({ UserDtoException.class })
+    public ResponseEntity<Object> handleUserDtoExceptions(final RuntimeException ex, final WebRequest request) {
+    	logger.error("400 Status Code", ex);
+    	final GenericResponse bodyOfResponse = new GenericResponse(ex.getMessage(), "UserDtoError");
+    	return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+    
+    @ExceptionHandler({ OrganizationException.class })
+    public ResponseEntity<Object> handleOrganizationExceptions(final RuntimeException ex, final WebRequest request) {
+    	logger.error("400 Status Code", ex);
+    	final GenericResponse bodyOfResponse = new GenericResponse(ex.getMessage(), "OrganizationError");
+    	return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+    
 	// 409
     @ExceptionHandler({ UserAlreadyExistException.class })
     public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
@@ -41,6 +55,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
     
+    //500
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
         logger.error("500 Status Code", ex);

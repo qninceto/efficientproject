@@ -17,9 +17,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.efficientproject.model.DAO.INFO;
-import com.efficientproject.util.PasswordMatches;
-import com.efficientproject.util.ValidEmail;
-import com.efficientproject.util.ValidPassword;
+import com.efficientproject.validator.PasswordMatches;
+import com.efficientproject.validator.ValidEmail;
+import com.efficientproject.validator.ValidPassword;
 
 @Entity
 @Table(name = "users")
