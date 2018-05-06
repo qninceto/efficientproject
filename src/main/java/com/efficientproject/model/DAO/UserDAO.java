@@ -11,14 +11,14 @@ import java.util.Set;
 
 import javax.activation.UnsupportedDataTypeException;
 
-import com.efficientproject.model.entity.Organization;
-import com.efficientproject.model.entity.User;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.model.interfaces.IOrganizationDAO;
 import com.efficientproject.model.interfaces.IUserDAO;
+import com.efficientproject.persistance.model.Organization;
+import com.efficientproject.persistance.model.User;
 import com.efficientproject.util.Encrypter;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;
 
 public class UserDAO extends AbstractDBConnDAO implements IUserDAO {
 

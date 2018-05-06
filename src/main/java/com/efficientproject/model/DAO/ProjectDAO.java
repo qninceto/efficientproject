@@ -15,18 +15,18 @@ import javax.activation.UnsupportedDataTypeException;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.entity.Organization;
-import com.efficientproject.model.entity.Project;
-import com.efficientproject.model.entity.Task;
-import com.efficientproject.model.entity.User;
-import com.efficientproject.model.entity.Task.TaskState;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.model.interfaces.IOrganizationDAO;
 import com.efficientproject.model.interfaces.IProjectDAO;
 import com.efficientproject.model.interfaces.ITaskDAO;
 import com.efficientproject.model.interfaces.IUserDAO;
+import com.efficientproject.persistance.model.Organization;
+import com.efficientproject.persistance.model.Project;
+import com.efficientproject.persistance.model.Task;
+import com.efficientproject.persistance.model.User;
+import com.efficientproject.persistance.model.Task.TaskState;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;
 
 public class ProjectDAO extends AbstractDBConnDAO implements IProjectDAO {
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;

@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 import javax.activation.UnsupportedDataTypeException;
 
-import com.efficientproject.model.entity.Organization;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.IOrganizationDAO;
+import com.efficientproject.persistance.model.Organization;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;
 
 public class OrganizationDAO extends AbstractDBConnDAO implements IOrganizationDAO {
 

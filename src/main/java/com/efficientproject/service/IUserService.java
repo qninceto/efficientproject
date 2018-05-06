@@ -1,9 +1,9 @@
 package com.efficientproject.service;
 
-import com.efficientproject.dto.UserDto;
-import com.efficientproject.model.entity.User;
-import com.efficientproject.model.exceptions.OrganizationAlreadyExistException;
-import com.efficientproject.model.exceptions.UserAlreadyExistException;
+import com.efficientproject.persistance.model.User;
+import com.efficientproject.web.dto.UserDto;
+import com.efficientproject.web.error.OrganizationAlreadyExistException;
+import com.efficientproject.web.error.UserAlreadyExistException;
 
 public interface IUserService {
 

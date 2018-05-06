@@ -8,27 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.efficientproject.dto.UserDto;
 import com.efficientproject.model.DAO.INFO;
-import com.efficientproject.model.entity.User;
-import com.efficientproject.model.exceptions.OrganizationAlreadyExistException;
-import com.efficientproject.model.exceptions.UserAlreadyExistException;
-import com.efficientproject.repository.UserRepository;
+import com.efficientproject.persistance.dao.UserRepository;
+import com.efficientproject.persistance.model.Organization;
+import com.efficientproject.persistance.model.User;
+import com.efficientproject.web.dto.UserDto;
+import com.efficientproject.web.error.OrganizationAlreadyExistException;
+import com.efficientproject.web.error.UserAlreadyExistException;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
-	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";
+	private static final String DEFAUL_AVATAR_PATH = INFO.IMAGES_PATH + File.separator + "avatar-default.jpg";//fix this!!
 
 	@Autowired
 	private UserRepository repository;
 	
 	@Autowired
-	private OrganizationServiceImpl orgServiceImpl;
+	private IOrganizationService orgService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Transactional
+	@Transactional//is this enough????
 	@Override
 	public User registerNewUserAccount(UserDto accountDto){
 
@@ -41,20 +42,22 @@ public class UserServiceImpl implements IUserService {
 		user.setLastName(accountDto.getLastName());
 		user.setEmail(accountDto.getEmail());
 		
-		//encoding the password
+		//encoding the password:
 		user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+		
 		user.setAvatarPath(DEFAUL_AVATAR_PATH);
 		boolean admin = accountDto.isAdmin();
-		user.setAdmin(admin);// Arrays.asList("ROLE_USER","ROLE_ADMIN"));??
-		if (admin) {
-//			orgServiceImpl.registerOrganization(orgDto);
-			
-//			user.setOrganization(accountDto.getOrganization());
+		user.setAdmin(admin);
+		if (admin){
+			String organizationName = accountDto.getOrganizationName();
+			if(organizationName == null) {
+				//throw exception!!!!
+			}else {
+				user.setOrganization(orgService.registerOrganization(organizationName));
+			}
 		}
 		return repository.save(user);
 	}
-
-	
 
 	private boolean emailExist(String email) {
 		User user = repository.findByEmail(email);

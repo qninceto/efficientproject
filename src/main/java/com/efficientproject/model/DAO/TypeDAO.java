@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.efficientproject.model.entity.Type;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.ITypeDAO;
+import com.efficientproject.persistance.model.Type;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;
 
 public class TypeDAO extends AbstractDBConnDAO implements ITypeDAO{
 	private static final String GET_ALL_TYPES = "SELECT * from types;";

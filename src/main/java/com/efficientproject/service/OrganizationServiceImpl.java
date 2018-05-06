@@ -3,8 +3,9 @@ package com.efficientproject.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.efficientproject.model.entity.Organization;
-import com.efficientproject.repository.OrganizationReposiory;
+import com.efficientproject.persistance.dao.OrganizationReposiory;
+import com.efficientproject.persistance.model.Organization;
+import com.efficientproject.web.error.OrganizationAlreadyExistException;
 
 @Service("organizationService")
 public class OrganizationServiceImpl implements IOrganizationService {
@@ -12,19 +13,18 @@ public class OrganizationServiceImpl implements IOrganizationService {
 	@Autowired
 	private OrganizationReposiory orgRepository;
 
-//	public Organization registerOrganization() {
-//		Organization organization = new Organization();
-//		if (organizationExists(accountDto.getOrganization())) {
-//			throw new OrganizationAlreadyExistException(
-//					"{UniqueOrganization.organization.name}" + organization.getName());
-//		}
-//	}
+	public Organization registerOrganization(String orgName) {
+		
+		if (organizationExists(orgName)) {
+			throw new OrganizationAlreadyExistException("{UniqueOrganization.organization.name}" + orgName);
+		}
+		Organization organization = new Organization();
+		organization.setName(orgName);
+		return orgRepository.save(organization);
+	}
 
 	private boolean organizationExists(String name) {
 		Organization org = orgRepository.findByName(name);
-		if (org != null) {
-			return true;
-		}
-		return false;
+		return org != null;
 	}
 }

@@ -10,10 +10,10 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.entity.Sprint;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.ISprintDAO;
+import com.efficientproject.persistance.model.Sprint;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;
 
 public class SprintDAO extends AbstractDBConnDAO implements ISprintDAO {
 	private static final String CREATE_SPRINT = "INSERT into sprints values(null,?,?,?,?);";

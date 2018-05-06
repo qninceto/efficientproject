@@ -10,13 +10,13 @@ import javax.activation.UnsupportedDataTypeException;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.efficientproject.model.entity.Epic;
-import com.efficientproject.model.entity.Project;
-import com.efficientproject.model.exceptions.DBException;
-import com.efficientproject.model.exceptions.EfficientProjectDAOException;
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.model.interfaces.IEpicDAO;
-import com.efficientproject.model.interfaces.IProjectDAO;;
+import com.efficientproject.model.interfaces.IProjectDAO;
+import com.efficientproject.persistance.model.Epic;
+import com.efficientproject.persistance.model.Project;
+import com.efficientproject.web.error.DBException;
+import com.efficientproject.web.error.EfficientProjectDAOException;;
 
 public class EpicDAO extends AbstractDBConnDAO implements IEpicDAO {
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
