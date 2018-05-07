@@ -47,6 +47,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     	return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
     
+    // 404
+    @ExceptionHandler({ UserNotFoundException.class })
+    public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
+        logger.error("404 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.userNotFound", null, request.getLocale()), "UserNotFound");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    
 	// 409
     @ExceptionHandler({ UserAlreadyExistException.class })
     public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {

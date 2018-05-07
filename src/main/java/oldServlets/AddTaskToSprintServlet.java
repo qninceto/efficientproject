@@ -1,4 +1,4 @@
-package com.efficientproject.web.controller;
+package oldServlets;
 
 import java.io.IOException;
 
@@ -10,26 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.efficientproject.model.interfaces.DAOStorageSourse;
 import com.efficientproject.model.interfaces.IProjectDAO;
+import com.efficientproject.model.interfaces.ITaskDAO;
 import com.efficientproject.persistance.model.User;
 import com.efficientproject.util.IntegerChecker;
 import com.efficientproject.web.error.DBException;
 import com.efficientproject.web.error.EfficientProjectDAOException;
-import com.google.gson.Gson;
 
 /**
- * Servlet implementation class ReturnTasksPerState
+ * Servlet implementation class AddTaskToSprintServlet
  */
-@WebServlet("/returnTasksPerState")
-public class ReturnTasksPerStateServlet extends HttpServlet {
+@WebServlet("/addTaskToSprint")
+
+public class AddTaskToSprintServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final DAOStorageSourse SOURCE_DATABASE = DAOStorageSourse.DATABASE;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json");
 
+			/**
+			 * check if there is no session or there is but the user is different or the
+			 * user is not admin:
+			 */
 			if (request.getSession(false) == null || request.getSession().getAttribute("user") == null) {
 				response.sendRedirect("./LogIn");
 				return;
@@ -40,19 +42,32 @@ public class ReturnTasksPerStateServlet extends HttpServlet {
 				request.getRequestDispatcher("errorNotAuthorized.jsp").forward(request, response);
 				return;
 			}
+
+			String taskIdParam = request.getParameter("taskId");
+			String sprintIdParam = request.getParameter("sprintId");
 			String projectIdParam = request.getParameter("projectId");
-			if (projectIdParam != null && IntegerChecker.isInteger(projectIdParam)) {
+			if (taskIdParam != null && sprintIdParam != null && projectIdParam != null
+					&& IntegerChecker.isInteger(projectIdParam) && IntegerChecker.isInteger(sprintIdParam)
+					&& IntegerChecker.isInteger(taskIdParam)) {
 
 				int projectId = Integer.parseInt(projectIdParam);
-				String tasksPerStateJSON = new Gson()
-						.toJson(IProjectDAO.getDAO(SOURCE_DATABASE).tasksNumberPerState(projectId));
-				System.out.println(tasksPerStateJSON);
-				response.getWriter().println(tasksPerStateJSON);
+				/**
+				 * check if the project is of this admin
+				 */
+				if (!IProjectDAO.getDAO(SOURCE_DATABASE).isThisProjectOfThisUser(projectId, user.getId())) {
+					request.getRequestDispatcher("errorNotAuthorized.jsp").forward(request, response);
+					return;
+				}
+				int taskId = Integer.parseInt(taskIdParam);
+				int sprintId = Integer.parseInt(sprintIdParam);
+
+				ITaskDAO.getDAO(SOURCE_DATABASE).addTaskToSprint(taskId, sprintId);
+				response.sendRedirect("./allTasksProject?projectId=" + projectId + "&backLog=1");
 			} else {
 				request.getRequestDispatcher("error2.jsp").forward(request, response);
-
 			}
-		} catch (IOException | ServletException | DBException | EfficientProjectDAOException e) {
+
+		} catch (DBException | EfficientProjectDAOException | IOException | ServletException e) {
 			try {
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 				e.printStackTrace();
@@ -60,5 +75,7 @@ public class ReturnTasksPerStateServlet extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
+
 	}
+
 }

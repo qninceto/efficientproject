@@ -22,15 +22,11 @@ import com.efficientproject.web.error.EfficientProjectDAOException;
  */
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		try {
+				
+	
+			//doGet
 
-			if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
-				response.sendRedirect("./LogIn");
-				return;
-			}
 
 			User user = (User) request.getSession().getAttribute("user");
 			// if the user is admin forward to admins page
@@ -47,10 +43,10 @@ public class DashboardServlet extends HttpServlet {
 				String organizationName = user.getOrganization().getName();
 				request.setAttribute("organizationName", organizationName);
 
-				request.setCharacterEncoding("UTF-8");
+				/*request.setCharacterEncoding("UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				request.getRequestDispatcher("./homePageAdmin.jsp").forward(request, response);
-				response.setContentType("text/html");
+				response.setContentType("text/html");*/
 			} else {// if the user is worker:
 				if (IUserDAO.getDAO(DAOStorageSourse.DATABASE).isThereCurrentProjectForThisWorker(user)) {
 					int CurrentProjectId = IUserDAO.getDAO(DAOStorageSourse.DATABASE).returnCurrentWorkersProject(user);
@@ -58,13 +54,6 @@ public class DashboardServlet extends HttpServlet {
 					request.getSession().setAttribute("project", project);
 				}
 				response.sendRedirect("./workertasks");
-			}
-		} catch (IOException | ServletException | EfficientProjectDAOException | DBException e) {
-			try {
-				request.getRequestDispatcher("error.jsp").forward(request, response);
-				e.printStackTrace();
-			} catch (IOException | ServletException e1) {
-				e1.printStackTrace();
 			}
 		}
 	}
