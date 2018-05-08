@@ -9,16 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.efficientproject.persistance.model.User;
 import com.efficientproject.util.GenericResponse;
 
-@Controller
 public class LoginController {
 	
-	@RequestMapping(value = { "/login", "/" }, method = RequestMethod.GET)
-	public String showLogin() {
-		return "index.html";
-	}
-	
-	@RequestMapping(value= {"/login","/"},method = RequestMethod.POST)
-	protected GenericResponse login() {
 //			request.setCharacterEncoding("UTF-8");
 //			String email = request.getParameter("email");
 //			String password = request.getParameter("password");
@@ -42,7 +34,6 @@ public class LoginController {
 //			}
 
 		//			request.getSession().setAttribute("user", user);
-		return new GenericResponse("success"); //"redirect:/dashboard";
-	}
+		//return new GenericResponse("success"); //"redirect:/dashboard";
 
 }

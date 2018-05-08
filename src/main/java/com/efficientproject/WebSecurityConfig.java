@@ -3,16 +3,23 @@ package com.efficientproject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.efficientproject.security.CustomAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+    private UserDetailsService userDetailsService; 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -20,16 +27,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()//that fucking crap?!?!?!?!?
 			.authorizeRequests()
 				.antMatchers("/login*", "/", "/webjars/**", "/img/**", "/signup*", "/js/**", "/v2/api-docs/**",
-					"/swagger.json", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+					"/swagger.json", "/swagger-ui.html", "/swagger-resources/**", "/ss*", "/navBarAdmin.html").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/login")
 				.defaultSuccessUrl("/dashboard")//?
-				.failureUrl("/login?error=true")
+				.failureUrl("/login?error=true")//handle the error param in controler and html!
 				.and()
 			.logout()
+				.invalidateHttpSession(false)
 				.logoutSuccessUrl("/login")
+				.deleteCookies("JSESSIONID")
  				.permitAll()
  				.and()
  			.exceptionHandling() 
@@ -43,6 +52,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.withUser("admin").password("password").roles("ADMIN");
 	}
+	
+	 @Bean
+	    public DaoAuthenticationProvider authProvider() {
+	        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+	        authProvider.setUserDetailsService(userDetailsService);
+	        authProvider.setPasswordEncoder(passwordEncoder());
+	        return authProvider;
+	    }
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
