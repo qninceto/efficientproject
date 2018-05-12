@@ -32,6 +32,7 @@
 		<passay.version>1.0</passay.version>
 		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
 		<springfox-swagger-ui>2.7.0</springfox-swagger-ui>
+		<oauth.version></oauth.version>
 	</properties>
 
 	<dependencies>
@@ -75,6 +76,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<!-- <dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-jwt</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security.oauth</groupId>
+		    <artifactId>spring-security-oauth2</artifactId>
+		    <version>${oauth.version}</version>
+		</dependency> -->
 		
 		<!-- util -->
 		
@@ -83,7 +93,7 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.passay</groupId>
 			<artifactId>passay</artifactId>
 			<version>${passay.version}</version>
@@ -109,6 +119,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 			<!-- <version>${mysql.version}</version> -->
 		</dependency>
 		

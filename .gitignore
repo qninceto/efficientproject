@@ -21,15 +21,14 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-/target/
-
-src/main/resources/bg/ittalents/efficientproject/model/dao/INFO.java
-src/main/resources/bg/ittalents/efficientproject/model/dao/DBConnection.java
-
-
+target/
+.springBeans
 .classpath
 .project
 .metadata
 .settings/
 build
 /bin/
+.idea/
+*.patch
+*.iml
