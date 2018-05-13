@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.efficientproject</groupId>
+	<artifactId>efficientproject</artifactId>
+	<version>1.0.0</version>
+
+	<name>efficientproject</name>
+	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	
+	<properties>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		
+		<mysql.version>8.0.8-dmr</mysql.version>
+		<guava.version>20.0</guava.version>
+		<bootstrap.version>3.3.4</bootstrap.version>
+		<jquery.version>1.10.2</jquery.version>
+		<webjars-locator.version>0.30</webjars-locator.version>
+		<passay.version>1.0</passay.version>
+		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+		<springfox-swagger-ui>2.7.0</springfox-swagger-ui>
+		<oauth.version>2.2.1.RELEASE</oauth.version>
+        <jwt.version>1.0.9.RELEASE</jwt.version>
+		
+		<!-- util -->
+		<!-- <commons-lang3.version>3.4</commons-lang3.version> -->
+		<commons-io.version>2.4</commons-io.version>
+
+		<!-- Maven plugins -->
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<maven-war-plugin.version>3.2.0</maven-war-plugin.version>
+		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
+		<cargo-maven2-plugin.version>1.6.5</cargo-maven2-plugin.version>
+	</properties>
+	
+	<modules>
+		<module>resource-server</module>
+		<module>authentification-server</module>
+	</modules>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

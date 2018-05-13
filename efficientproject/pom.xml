@@ -3,37 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>efficientproject</artifactId>
+	<artifactId>resource-server</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
 
-	<name>MyProject</name>
-	<description>Demo project for Spring Boot</description>
+	<name>resource-server</name>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.1.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<groupId>com.efficientproject</groupId>
+		<artifactId>efficientproject</artifactId>
+		<version>1.0.0</version>
 	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-		<jstl.version>1.2</jstl.version>
-		<mysql.version>8.0.8-dmr</mysql.version>
-		<!-- <hibernate.validator.version>5.2.4.Final</hibernate.validator.version> -->
-		<!-- <hibernate.version>4.3.11.Final</hibernate.version> -->
-		<guava.version>20.0</guava.version>
-		<bootstrap.version>3.3.4</bootstrap.version>
-		<jquery.version>1.10.2</jquery.version>
-		<webjars-locator.version>0.30</webjars-locator.version>
-		<passay.version>1.0</passay.version>
-		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
-		<springfox-swagger-ui>2.7.0</springfox-swagger-ui>
-		<oauth.version></oauth.version>
-	</properties>
 
 	<dependencies>
 	
@@ -43,10 +23,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<!-- 		<dependency>
-   		 	<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -69,6 +45,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+<!-- 		<dependency>
+   		 	<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency> -->
 		
 		<!-- security -->
 		
@@ -76,15 +56,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-jwt</artifactId>
+		    <version>${jwt.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.security.oauth</groupId>
 		    <artifactId>spring-security-oauth2</artifactId>
 		    <version>${oauth.version}</version>
-		</dependency> -->
+		</dependency>
 		
 		<!-- util -->
 		
@@ -163,15 +144,5 @@
 			<version>5.0.6</version>
 		</dependency> -->
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 
 </project>

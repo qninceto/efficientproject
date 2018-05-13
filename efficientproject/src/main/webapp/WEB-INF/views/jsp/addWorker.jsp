@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="customCSS/styles.css">
 <!-- <script src="js/myScript.js"></script> -->
 <script>
