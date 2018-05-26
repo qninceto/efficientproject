@@ -2,6 +2,8 @@ package com.efficientproject.config;
 
 import java.util.Arrays;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +32,11 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
     
+//    @Autowired
+//    private DataSource dataSource;
+    
     @Override
-    public void configure(
-      AuthorizationServerSecurityConfigurer oauthServer) 
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) 
       throws Exception {
         oauthServer
           .tokenKeyAccess("permitAll()")
@@ -41,7 +45,8 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
+        clients//.jdbc(dataSource)
+        .inMemory()
             .withClient("sampleClientId")
             .authorizedGrantTypes("implicit")
             .scopes("read", "write", "foo", "bar")

@@ -13,6 +13,7 @@
 		<groupId>com.efficientproject</groupId>
 		<artifactId>efficientproject</artifactId>
 		<version>1.0.0</version>
+		<relativePath>../</relativePath>
 	</parent>
 
 	<dependencies>

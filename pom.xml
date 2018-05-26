@@ -43,8 +43,8 @@
 	</properties>
 	
 	<modules>
-		<module>resource-server</module>
-		<module>authentification-server</module>
+		<module>efficientproject</module>
+		<module>authentification</module>
 	</modules>
 	
 	<build>
