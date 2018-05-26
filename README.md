@@ -19,3 +19,6 @@ mvn spring-boot:run
 ```
 authetification-server is reached on `http://localhost:8081/authentification-server` 
 the subdomain can be changed from the application.properties
+the default used authentifiaction is jdbc with h2, if you want to change it to inmemorry 
+uncomment the inmemory configuration and comment the jdbc one
+there is also an option to use MySQl db
