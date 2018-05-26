@@ -14,9 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.efficientproject.security.CustomAuthenticationProvider;
 
-//old websecurity config
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -27,14 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()//that fucking crap?!?!?!?!?
 			.authorizeRequests()
-				.antMatchers("/login*", "/", "/webjars/**", "/img/**", "/signup*", "/js/**", "/v2/api-docs/**",
-					"/swagger.json", "/swagger-ui.html", "/swagger-resources/**", "/ss*", "/navBarAdmin.html").permitAll()
+				.antMatchers("/login","/v2/api-docs/**",	"/swagger.json", 
+						"/swagger-ui.html", "/swagger-resources/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/dashboard")//?
-				.failureUrl("/login?error=true")//handle the error param in controler and html!
+				.defaultSuccessUrl("/dashboard")
+				.failureUrl("/login?error=true")
 				.and()
 			.logout()
 				.invalidateHttpSession(false)
