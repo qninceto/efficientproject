@@ -21,20 +21,16 @@
 		<java.version>1.8</java.version>
 		
 		<mysql.version>8.0.8-dmr</mysql.version>
-		<guava.version>20.0</guava.version>
-		<bootstrap.version>3.3.4</bootstrap.version>
-		<jquery.version>1.10.2</jquery.version>
-		<webjars-locator.version>0.30</webjars-locator.version>
-		<passay.version>1.0</passay.version>
 		<springfox-swagger2.version>2.7.0</springfox-swagger2.version>
 		<springfox-swagger-ui>2.7.0</springfox-swagger-ui>
 		<oauth.version>2.2.1.RELEASE</oauth.version>
         <jwt.version>1.0.9.RELEASE</jwt.version>
 		
 		<!-- util -->
-		<!-- <commons-lang3.version>3.4</commons-lang3.version> -->
-		<commons-io.version>2.4</commons-io.version>
-
+		<commons-io.version>2.6</commons-io.version>
+		<guava.version>20.0</guava.version>
+		<passay.version>1.0</passay.version>	
+		
 		<!-- Maven plugins -->
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<maven-war-plugin.version>3.2.0</maven-war-plugin.version>
@@ -44,7 +40,7 @@
 	
 	<modules>
 		<module>efficientproject</module>
-		<module>authentification</module>
+		<module>authorization</module>
 	</modules>
 	
 	<build>

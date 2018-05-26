@@ -24,6 +24,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+/*
+ *uncomment to switch to inMemory mode and comment the jdbc config 
+ */
 //@Configuration
 //@EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfigJwtInMem extends AuthorizationServerConfigurerAdapter {
