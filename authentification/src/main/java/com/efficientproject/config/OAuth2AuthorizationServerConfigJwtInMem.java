@@ -24,16 +24,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
-@Configuration
-@EnableAuthorizationServer
-public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfigurerAdapter {
+//@Configuration
+//@EnableAuthorizationServer
+public class OAuth2AuthorizationServerConfigJwtInMem extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
-    
-    @Autowired
-    private DataSource dataSource;
     
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) 
@@ -45,7 +42,7 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource)
+        clients.inMemory()
             .withClient("sampleClientId")
             .authorizedGrantTypes("implicit")
             .scopes("read", "write", "foo", "bar")

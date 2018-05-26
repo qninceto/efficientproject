@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,6 +52,16 @@ public class TokenController {
 			((JdbcTokenStore) tokenStore).removeRefreshToken(tokenId);
 		}
 		return tokenId;
+	}
+	
+	//disable favicon://move to another class!
+	@Controller
+	static class FaviconController {
+	  
+	    @GetMapping("../favicon.ico")
+	    @ResponseBody
+	    void returnNoFavicon() {
+	    }
 	}
 
 }
